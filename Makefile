@@ -14,9 +14,8 @@ solver.o:
 	$(CC) -c $(SRCDIR)/solver.cpp $(CFLAGS)
 
 
-bfs_solver.o: solver.o
-	$(CC) -c $(SRCDIR)/bfs_solver.cpp solver.o $(CFLAGS)
-
+bfs_solver.o: 
+	$(CC) -c $(SRCDIR)/bfs_solver.cpp $(CFLAGS)
 
 clean:
 	rm *.o

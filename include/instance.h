@@ -10,5 +10,7 @@ class Instance
 		short int current_state[9];
 	public:
 		Instance(int start_position, int board_size, char *argv[]);
-		void move_blank(int direction);		
+		void move_blank(int direction);
+		float getKey();
+		float getValue();
 };
