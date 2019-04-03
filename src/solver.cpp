@@ -3,5 +3,5 @@
 
 Solver::Solver()
 {
-	std::cout << "TODO" << std::endl;
+	std::cout << "TODO - Solver Constructor" << std::endl;
 }

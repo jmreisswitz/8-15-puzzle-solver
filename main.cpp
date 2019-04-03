@@ -3,15 +3,16 @@
 #include <string>
 #include "instance.h"
 #include "solver.h"
+#include "bfs_solver.h"
 using namespace std;
 
-Solver init(string mode)
+Solver *init(string mode)
 {
 	cout << "Mode: " << mode << endl;
-	if (mode.compare("-bfs")){
-		Solver s;
-		return s;
-	}
+	//if (mode.compare("-bfs")){
+		return new BfsSolver();
+	//}
+	/*
 	else if(mode.compare("-idfs")){
 		Solver s;
 		return s;
@@ -28,13 +29,15 @@ Solver init(string mode)
 		Solver s;
 		return s;
 	}
+	*/
+
 }
 
 int main(int argc, char *argv[])
 {
 
-	Solver s = init(argv[1]);
-	
+	Solver* s = init(argv[1]);
+	s->run();
 	Instance i(2, 8, argv);
 	i.move_blank(DOWN);
 
