@@ -22,10 +22,10 @@ private:
 	};
 
 public:
-	Nheap();
+	Nheap(int n);
 	void insert(T element);
 	T getmin();
-	T deletemin();
+	T pop_min();
 	//void deleteNode(T element);
 	void update(T oldElement, T newElement);
 	bool isEmpty(){
@@ -41,7 +41,8 @@ public:
 
 
 template <class T>
-Nheap<T>::Nheap(){
+Nheap<T>::Nheap(int n){
+	this->n = n;
 }
 
 template <class T>
@@ -73,7 +74,7 @@ T Nheap<T>::getmin(){
 }
 
 template <class T>
-T Nheap<T>::deletemin(){
+T Nheap<T>::pop_min(){
 	T aux = elements.front();
 	swap(0, elements.size() - 1);	
 	elements.pop_back();

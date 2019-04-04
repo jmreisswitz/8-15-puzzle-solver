@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "instance.h"
 #include "solver.h"
 #include "bfs_solver.h"
@@ -34,19 +35,35 @@ Solver *init(string mode)
 
 }
 
+void test_heap()
+{
+	srand(1);
+	Nheap<Instance> heap(2);
+	for(int i = 0; i < 999999 ; i++ ){
+		int rand_number = rand()%5000;
+		heap.insert(Instance(rand_number, rand_number));
+	}
+	//heap.printElements();
+	Instance t = heap.getmin();
+	cout << "min: " << t.getKey() << endl;
+
+}
+
+
 int main(int argc, char *argv[])
 {
+	test_heap();
+	return 0;
 	if(argc < 11){
 		cout << "Where are the parameters, mate?" << endl;
 		return -1;
 	}
-	
 	Solver* s = init(argv[1]);
 	s->run();
 	
 	Instance i(2, 8, argv);
 	i.move_blank(DOWN);
-	Nheap<Instance> heap;
+	Nheap<Instance> heap(4);
 	heap.insert(i);
 	heap.printElements();
 

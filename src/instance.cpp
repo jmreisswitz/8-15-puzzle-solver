@@ -11,6 +11,11 @@ Instance::Instance(int start_position, int board_size, char *argv[])
 	}
 };
 
+Instance::Instance(int key, int value)
+{
+	this->key = key;
+	this->value = value;
+}
 
 void Instance::move_blank(int direction)
 {
@@ -20,10 +25,10 @@ void Instance::move_blank(int direction)
 
 float Instance::getValue()
 {
-	return 1;	
+	return value;	
 };
 
 float Instance::getKey()
 {
-	return 2;
+	return key;
 };
