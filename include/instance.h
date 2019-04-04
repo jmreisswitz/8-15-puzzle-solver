@@ -14,7 +14,7 @@ class Instance
 		Instance(int start_position, int board_size, char *argv[]);
 		Instance(int key, int value);
 		void move_blank(int direction);
-		float getKey();
-		float getValue();
+		float get_key();
+		float get_value();
 		
 };

@@ -12,8 +12,8 @@ class Nheap{
 private:
 	vector<T> elements;
 	int n;
-	void heapfyUp(int i);
-	void heapfyDown(int i);
+	void heapfy_up(int i);
+	void heapfy_down(int i);
 	int parent(int i);
 	void swap(int i, int j){
 		T aux = elements[i];
@@ -24,16 +24,16 @@ private:
 public:
 	Nheap(int n);
 	void insert(T element);
-	T getmin();
 	T pop_min();
+	T get_min();
 	//void deleteNode(T element);
 	void update(T oldElement, T newElement);
-	bool isEmpty(){
+	bool is_empty(){
 		return elements.empty();
 	};
-	void printElements(){
+	void print_elements(){
 		for(int i = 0; i < elements.size(); i++)
-			cout << "(" << elements[i].getValue() << ", " <<  elements[i].getKey() << "), ";
+			cout << "(" << elements[i].get_value() << ", " <<  elements[i].get_key() << "), ";
 		cout << "\n";
 	};
 };
@@ -51,13 +51,13 @@ int Nheap<T>::parent(int i){
 }
 
 template <class T>
-void Nheap<T>::heapfyUp(int i){
+void Nheap<T>::heapfy_up(int i){
 	if (i != 0)
 	{
-		if(elements[parent(i)].getKey() > elements[i].getKey())
+		if(elements[parent(i)].get_key() > elements[i].get_key())
 		{
 			swap(i, parent(i));			
-			heapfyUp(parent(i));
+			heapfy_up(parent(i));
 		}
 	}
 }
@@ -65,11 +65,11 @@ void Nheap<T>::heapfyUp(int i){
 template <class T>
 void Nheap<T>::insert(T element){
 	elements.push_back(element);
-	heapfyUp(elements.size()-1);
+	heapfy_up(elements.size()-1);
 }
 
 template <class T>
-T Nheap<T>::getmin(){
+T Nheap<T>::get_min(){
 	return elements.front();
 }
 
@@ -79,8 +79,8 @@ T Nheap<T>::pop_min(){
 	swap(0, elements.size() - 1);	
 	elements.pop_back();
 	if(!elements.empty())
-		heapfyDown(0);
-	//cout << "RETURNED: (" << aux.getValue() << ", " << aux.getKey() << ")\n";
+		heapfy_down(0);
+	//cout << "RETURNED: (" << aux.get_value() << ", " << aux.get_key() << ")\n";
 	return aux;
 }
 /*
@@ -88,7 +88,7 @@ template <class T>
 void Nheap<T>::deleteNode(int i){
 	swap(elements.front(), elements.back());
 	elements.pop_back();
-	heapfyDown(elements.size()-1);
+	heapfy_down(elements.size()-1);
 }
 */
 
@@ -96,14 +96,14 @@ template<class T>
 void Nheap<T>::update(T oldElement, T newElement){
 	for(int i = 0; i < elements.size(); i++)
 	{
-		if(oldElement.getKey() == elements[i].getKey())
+		if(oldElement.get_key() == elements[i].get_key())
 		{
 			elements[i] = newElement;
-			if(newElement.getKey() > newElement.getKey()){
-				heapfyDown(i);				
+			if(newElement.get_key() > newElement.get_key()){
+				heapfy_down(i);				
 			}
 			else{
-				heapfyUp(i);
+				heapfy_up(i);
 			}
 		}
 	}
@@ -111,25 +111,25 @@ void Nheap<T>::update(T oldElement, T newElement){
 
 
 template <class T>
-void Nheap<T>::heapfyDown(int i){
+void Nheap<T>::heapfy_down(int i){
 	if(elements.size() - 1 > n*i + 1){ // verifica se tem filhos
-		int kmin = 0;//elements[n*i-1].getKey
+		int kmin = 0;//elements[n*i-1].get_key
 		int k=0;
-		//cout << "\npai = (" << elements[i].getValue() << ", " <<  elements[i].getKey() << ")\n";
+		//cout << "\npai = (" << elements[i].get_value() << ", " <<  elements[i].get_key() << ")\n";
 		//cout << "filhos: ";
-			//cout << "(" << elements[k + (n*i)+1].getValue() << ", " <<  elements[k + (n*i)+1].getKey() << "), ";
+			//cout << "(" << elements[k + (n*i)+1].get_value() << ", " <<  elements[k + (n*i)+1].get_key() << "), ";
 		for(k = 1; k < n && elements.size() > k + (n*i)+1; k++)
 		{
-			//cout << "(" << elements[k + (n*i)+1].getValue() << ", " <<  elements[k + (n*i)+1].getKey() << "), ";
-			if ( elements[k + (n*i)+1].getKey() < elements[kmin + (n*i)+1].getKey()){ // elements.size() - 1 < k + (n*i)+1
-				kmin = k;//min = elements[k + n*i - 1].getKey();
+			//cout << "(" << elements[k + (n*i)+1].get_value() << ", " <<  elements[k + (n*i)+1].get_key() << "), ";
+			if ( elements[k + (n*i)+1].get_key() < elements[kmin + (n*i)+1].get_key()){ // elements.size() - 1 < k + (n*i)+1
+				kmin = k;//min = elements[k + n*i - 1].get_key();
 			}
 		}
-		if(elements[i].getKey() > elements[kmin + (n*i)+1].getKey())
+		if(elements[i].get_key() > elements[kmin + (n*i)+1].get_key())
 		{	
 			//cout << "oi 1";
 			swap(i, kmin + (n*i)+1);
-			heapfyDown(kmin + (n*i)+1);
+			heapfy_down(kmin + (n*i)+1);
 		}
 	}
 }

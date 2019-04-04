@@ -23,12 +23,12 @@ void Instance::move_blank(int direction)
 };
 
 
-float Instance::getValue()
+float Instance::get_value()
 {
 	return value;	
 };
 
-float Instance::getKey()
+float Instance::get_key()
 {
 	return key;
 };

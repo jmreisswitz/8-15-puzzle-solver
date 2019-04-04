@@ -39,13 +39,19 @@ void test_heap()
 {
 	srand(1);
 	Nheap<Instance> heap(2);
-	for(int i = 0; i < 999999 ; i++ ){
+	for(int i = 0; i < 10000 ; i++ ){
 		int rand_number = rand()%5000;
 		heap.insert(Instance(rand_number, rand_number));
 	}
 	//heap.printElements();
-	Instance t = heap.getmin();
-	cout << "min: " << t.getKey() << endl;
+	Instance t = heap.pop_min();
+	t = heap.pop_min();
+	t = heap.pop_min();
+	t = heap.pop_min();
+	t = heap.pop_min();
+	t = heap.pop_min();
+	t = heap.pop_min();
+	cout << "min: " << t.get_key() << endl;
 
 }
 
@@ -65,7 +71,7 @@ int main(int argc, char *argv[])
 	i.move_blank(DOWN);
 	Nheap<Instance> heap(4);
 	heap.insert(i);
-	heap.printElements();
+	heap.print_elements();
 
 	
 	return 0;
