@@ -7,14 +7,34 @@
 class Instance
 {
 	private:
-		short int current_state[9];
-		int key;
+		/// attributes
+		unsigned short int current_state[16];
+		unsigned short int manhattan_distance;
 		int value;
+		int blank_position;
+		unsigned short int board_size;
+		unsigned long int identifier;
+		
+		/// private methods
+		void generate_manhattan_distance();
+		void swap_positions(int position1, int position2);
+		int get_num_of_columns();
+
 	public:
-		Instance(int start_position, int board_size, char *argv[]);
-		Instance(int key, int value);
-		void move_blank(int direction);
+		/// constructors
+		Instance(int start_position, unsigned short int board_size, char *argv[]);
+		Instance(unsigned short int key, int value);
+		Instance(unsigned short int board_size, unsigned short int* state);
+
+		/// public methods
+		Instance* move_blank(int direction);
+		bool is_goal_state();
+		void print_table();
+
+
+		/// getters ans setters
+		unsigned short int get_manhattan_distance();
+		unsigned long get_identifier();
 		float get_key();
 		float get_value();
-		
 };
