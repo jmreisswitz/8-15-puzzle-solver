@@ -10,7 +10,8 @@ Instance::Instance(int start_position, unsigned short int board_size, char *argv
 	for(int i = 0; i < board_size+1; i++)
 	{
 		current_state[i] = atoi(argv[i+start_position]);
-		identifier += (unsigned long int)(i+1)*current_state[i];
+		identifier += (unsigned long int)(pow(10, i))*current_state[i];
+		std::cout << identifier << std::endl;
 		if(current_state[i] == 0)
 			blank_position = i;		
 	}
@@ -27,10 +28,10 @@ Instance::Instance(unsigned short int board_size, unsigned short int* state)
 {
 	identifier = 0;
 	this->board_size = board_size;
-	for(int i = 0; i < board_size+1; i++)
+	for(unsigned short int i = 0; i < board_size+1; i++)
 	{
 		current_state[i] = state[i];
-		identifier += (unsigned long int)(i+1)*current_state[i];
+		identifier += (unsigned long int)(pow(10, i))*state[i];
 		if(current_state[i] == 0)
 			blank_position = i;		
 	}
@@ -108,11 +109,11 @@ bool Instance::is_goal_state()
 void Instance::print_table()
 {
 	int num_of_columns = get_num_of_columns();
-	std::cout << "Table " << identifier << ":" << std::endl;
+	std::cout << "\nTable " << identifier << ":" << std::endl;
 	for(int i = 0; i < board_size+1; i++){
-		if((i+1)%num_of_columns && i>0)
-			std::cout << std::endl;
 		std::cout << current_state[i] << " ";
+		if((i+1)%num_of_columns==0 && i>0)
+			std::cout << std::endl;
 	}
 	std::cout << "Is goal? " << is_goal_state() << std::endl;
 }

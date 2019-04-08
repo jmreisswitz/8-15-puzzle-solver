@@ -1,3 +1,5 @@
+#ifndef INSTANCE_H
+#define INSTACE_H
 
 #define DOWN 0
 #define LEFT 1
@@ -39,3 +41,6 @@ class Instance
 		float get_key();
 		float get_value();
 };
+
+
+#endif /* INSTANCE_H */
