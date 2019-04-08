@@ -43,7 +43,7 @@ Instance::Instance(unsigned short int board_size, unsigned short int* state)
 
 void Instance::generate_manhattan_distance()
 {
-
+	manhattan_distance = 1; // TODO
 };
 
 void Instance::swap_positions(int position1, int position2)
@@ -58,10 +58,17 @@ int Instance::get_num_of_columns()
 	return (int) sqrt(board_size+1);
 }
 
+Instance* Instance::gen_new_instance(int end_position)
+{
+	swap_positions(blank_position, end_position);
+	Instance* t = new Instance(board_size, current_state);
+	swap_positions(end_position, blank_position);
+	return t;
+}
+
 /*
 /// public methods
 */
-
 
 Instance* Instance::move_blank(int direction)
 {
@@ -69,24 +76,22 @@ Instance* Instance::move_blank(int direction)
 	if (direction == UP){
 		if(blank_position - num_of_columns < 0) //if((blank_position < 3 && board_size == 8) || (blank_position < 4 && board_size==15))
 			return NULL;
-		swap_positions(blank_position, blank_position-num_of_columns);
-		Instance* t = new Instance(board_size, current_state);
-		swap_positions(blank_position-num_of_columns, blank_position);
-		return t;
+		return gen_new_instance(blank_position-num_of_columns);
 	}
 	if(direction == DOWN){
 		if (blank_position+num_of_columns > board_size)
 			return NULL;
-		swap_positions(blank_position, blank_position+num_of_columns);
-		Instance* t = new Instance(board_size, current_state);
-		swap_positions(blank_position+num_of_columns, blank_position);
-		return t;
+		return gen_new_instance(blank_position+num_of_columns);
 	}
 	if(direction == LEFT){
-		return NULL; // TODO
+		if(blank_position%num_of_columns == 0)
+			return NULL;
+		return gen_new_instance(blank_position-1);
 	}
 	if(direction == RIGHT){
-		return NULL; // TODO
+		if(blank_position%num_of_columns == num_of_columns - 1)
+			return NULL;
+		return gen_new_instance(blank_position+1);
 	}
 	return NULL; // shouldnt never reach here
 };
@@ -109,6 +114,7 @@ void Instance::print_table()
 			std::cout << std::endl;
 		std::cout << current_state[i] << " ";
 	}
+	std::cout << "Is goal? " << is_goal_state() << std::endl;
 }
 
 
@@ -138,3 +144,22 @@ unsigned short int Instance::get_manhattan_distance()
 	return manhattan_distance;
 };
 
+/*
+ 5
+ 0  1  2  3  4 
+ 5  5  6  8  9
+10 11 12 13 14
+15 16 17 18 19
+20 21 22 23 24
+
+ 4
+ 0  1  2  3 
+ 4  5  6  7
+ 8  9 10 11
+12 13 14 15
+
+3
+0 1 2
+3 4 5
+6 7 8
+*/

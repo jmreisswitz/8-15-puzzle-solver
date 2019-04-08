@@ -19,6 +19,7 @@ class Instance
 		void generate_manhattan_distance();
 		void swap_positions(int position1, int position2);
 		int get_num_of_columns();
+		Instance* gen_new_instance(int end_position);
 
 	public:
 		/// constructors
