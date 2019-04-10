@@ -8,7 +8,6 @@ Solver::Solver()
 	explored_nodes = 0;
 	solution_lenght = 0;
 	time_to_solution = 0; /// depois tem que ver direitinho qual o tipo de dado que a biblioteca de time espera
-	std::cout << "Solver Constructor Finishing" << std::endl;
 };
 
 void Solver::insert_into_closed(Instance t)

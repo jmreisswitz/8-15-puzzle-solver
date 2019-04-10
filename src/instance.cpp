@@ -115,7 +115,7 @@ void Instance::print_table()
 		if((i+1)%num_of_columns==0 && i>0)
 			std::cout << std::endl;
 	}
-	std::cout << "Is goal? " << is_goal_state() << std::endl;
+	//std::cout << "Is goal? " << is_goal_state() << std::endl;
 }
 
 
@@ -142,7 +142,7 @@ float Instance::get_key()
 
 unsigned short int Instance::get_manhattan_distance()
 {
-	return manhattan_distance;
+	return 42;//manhattan_distance;
 };
 
 /*

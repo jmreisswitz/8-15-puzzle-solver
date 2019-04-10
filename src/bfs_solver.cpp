@@ -9,7 +9,6 @@ BfsSolver::BfsSolver()
 
 bool BfsSolver::run(Instance initial_state)
 {
-	std::cout << "iniciando run em bfs" << std::endl;
 	init_state_heuristic = initial_state.get_manhattan_distance();
 	std::list<Instance> open;
 	open.push_back(initial_state);
@@ -22,10 +21,10 @@ bool BfsSolver::run(Instance initial_state)
 		{
 			Instance* t_line = t.move_blank(i);
 			if (t_line == nullptr){ // 
-				delete t_line;
 				continue;
 			}
 			if(t_line->is_goal_state()){
+				t_line->print_table();
 				finish_simulation();
 				open.clear();
 				delete t_line;
