@@ -4,5 +4,5 @@ class BfsSolver: public Solver
 {
 	public:
 		BfsSolver();
-		void run();
+		bool run(Instance initial_state);
 };

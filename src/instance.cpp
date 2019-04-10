@@ -11,7 +11,7 @@ Instance::Instance(int start_position, unsigned short int board_size, char *argv
 	{
 		current_state[i] = atoi(argv[i+start_position]);
 		identifier += (unsigned long int)(pow(10, i))*current_state[i];
-		std::cout << identifier << std::endl;
+		//std::cout << identifier << std::endl;
 		if(current_state[i] == 0)
 			blank_position = i;		
 	}

@@ -5,33 +5,17 @@
 //#include "instance.h"
 #include "solver.h"
 #include "bfs_solver.h"
-#include "nheap.h"
-#include "tests.h"
+//#include "tests.h"
 using namespace std;
 
 
-int main(int argc, char *argv[])
-{
-	/*
-	if(argc < 11){
-		cout << "Where are the parameters, mate?" << endl;
-		return -1;
-	}
-	*/
-	test_instance();
-	return 0;
-}
-
-
-
-/*
 Solver *init(string mode)
 {
 	cout << "Mode: " << mode << endl;
-	if (mode.compare("-bfs")){
+	if (mode.compare(" -bfs")){
 		return new BfsSolver();
 	}
-	
+	/*	
 	else if(mode.compare("-idfs")){
 		Solver s;
 		return s;
@@ -48,7 +32,24 @@ Solver *init(string mode)
 		Solver s;
 		return s;
 	}
-	
+	*/
+	cout << "should not come here" << endl;
+	return nullptr;
 
 }
-*/
+
+
+int main(int argc, char *argv[])
+{
+	
+	if(argc < 11){
+		cout << "Where are the parameters, mate?" << endl;
+		return -1;
+	}
+	Instance initial(2, 8, argv);
+	initial.print_table();
+	Solver* s = init(argv[1]);
+	s->run(initial);
+	delete s;
+	return 0;
+}

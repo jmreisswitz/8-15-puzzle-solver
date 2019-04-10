@@ -1,10 +1,12 @@
 #ifndef INSTANCE_H
 #define INSTACE_H
 
-#define DOWN 0
+#define FIRST 0 // assim podemos iterar 
+#define UP 0
 #define LEFT 1
 #define RIGHT 2
-#define UP 3
+#define DOWN 3
+#define LAST 3 // pela ordem de abertura dos nodos
 
 class Instance
 {
