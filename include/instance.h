@@ -1,47 +1,33 @@
 #ifndef INSTANCE_H
 #define INSTACE_H
 
-#define FIRST 0 // assim podemos iterar 
+#define FIRST 0 // assim podemos iterar
 #define UP 0
 #define LEFT 1
 #define RIGHT 2
 #define DOWN 3
 #define LAST 3 // pela ordem de abertura dos nodos
 
+#define State unsigned long
+
 class Instance
 {
 	private:
 		/// attributes
-		unsigned short int current_state[16];
-		unsigned short int manhattan_distance;
-		int value;
-		int blank_position;
-		unsigned short int board_size;
-		unsigned long int identifier;
-		
-		/// private methods
-		void generate_manhattan_distance();
-		void swap_positions(int position1, int position2);
-		int get_num_of_columns();
-		Instance* gen_new_instance(int end_position);
+		State state = 0;
+        unsigned int cost;
 
 	public:
 		/// constructors
-		Instance(int start_position, unsigned short int board_size, char *argv[]);
-		Instance(unsigned short int key, int value);
-		Instance(unsigned short int board_size, unsigned short int* state);
+		Instance(State state, int cost = 0) { this->state = state; this->cost = cost};
 
 		/// public methods
 		Instance* move_blank(int direction);
 		bool is_goal_state();
 		void print_table();
 
-
 		/// getters ans setters
-		unsigned short int get_manhattan_distance();
-		unsigned long get_identifier();
-		float get_key();
-		float get_value();
+		unsigned short int get_manhattan_distance(State goal);
 };
 
 

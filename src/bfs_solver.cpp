@@ -7,38 +7,36 @@ BfsSolver::BfsSolver()
 :Solver()
 {};
 
-bool BfsSolver::run(Instance initial_state)
+bool BfsSolver::run(Instance initial_node)
 {
-	init_state_heuristic = initial_state.get_manhattan_distance();
+	init_state_heuristic = initial_node.get_manhattan_distance();
 	std::list<Instance> open;
-	open.push_back(initial_state);
-	insert_into_closed(initial_state);
+	open.push_back(initial_node);
+	closed.insert(initial_node);
 	while(!open.empty())
 	{
-		Instance t = open.front();
+		Instance current = open.front();
+		explored_nodes++;
 		open.pop_front();
 		for(int i = FIRST; i <= LAST; i++) // for each <a,s'> element of succ(state)
 		{
-			Instance* t_line = t.move_blank(i);
-			if (t_line == nullptr){ // 
+			State neighbor = t.move_blank(i);
+			if (neighbor == 0 || closed.count(neighbor)){ //
 				continue;
 			}
-			if(t_line->is_goal_state()){
-				t_line->print_table();
-				finish_simulation();
+			Instance child_node(neighbor, current.cost + 1);
+			if(neighbor == goal)){
+				child_node->print_table();
+				finish_simulation(child_node);
 				open.clear();
-				delete t_line;
 				return true;
 			}
-			if(!is_on_closed(t_line)){
-				std::cout << "inserindo em closed: ";
-				t_line->print_table();
-				insert_into_closed(*t_line);
-				open.push_back(*t_line);				
-			}
-			delete t_line;
+            std::cout << "inserindo em closed: ";
+            child_node->print_table();
+            closed.insert(neighbor);
+            open.push_back(child_node);
 		}
 	}
-	
+
 	return false;
 };
