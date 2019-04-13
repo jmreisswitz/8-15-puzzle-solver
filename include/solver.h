@@ -1,12 +1,12 @@
 #ifndef SOLVER_H
 #define SOLVER_H
-#include <map>
+#include <set>
 #include "instance.h"
 
 class Solver
 {
 	public:
-		Solver(State goal);
+		Solver();
 		virtual bool run(Instance initial_state) = 0;
 
 	protected:
@@ -14,9 +14,9 @@ class Solver
 		double heuristic_avg;
 		unsigned short int init_state_heuristic;
 		State goal;
-		std::set<State> closed;
+		std::set<Instance> closed;
 
-		void finish_simulation(Instance& node); /// ver os parâmetros depois
+		void finish_simulation(Instance& node);
 
 };
 

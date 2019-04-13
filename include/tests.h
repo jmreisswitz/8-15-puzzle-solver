@@ -1,6 +1,7 @@
 #include <iostream>
+#include <bitset>
 #include "instance.h"
-#include "nheap.h"
+//#include "../src/instance.cpp"
 
 using namespace std;
 
@@ -9,93 +10,85 @@ using namespace std;
     valgrind --leak-check=yes ./main
 */
 
-
-void test_heap()
+inline State swap_positions(State state, int blank_position, int tile_position)
 {
-	srand(1);
-	Nheap<Instance> heap(2);
-	for(int i = 0; i < 10000 ; i++ ){
-		int rand_number = rand()%5000;
-		heap.insert(Instance(rand_number, rand_number));
+	std::cout << "\nswaping before: " << std::bitset<64>(state) << std::endl;
+	std::cout << "swaping positions: " << blank_position << ", " << tile_position << std::endl;
+
+	std::bitset<64> new_state(state);
+	for(int i = 0; i < 4; i++){
+		new_state[4*blank_position+i] = new_state[4*tile_position+i];
+		new_state[4*tile_position+i] = 0;
 	}
-	//heap.printElements();
-	Instance t = heap.pop_min();
-	t = heap.pop_min();
-	t = heap.pop_min();
-	t = heap.pop_min();
-	t = heap.pop_min();
-	t = heap.pop_min();
-	t = heap.pop_min();
-	cout << "min: " << t.get_key() << endl;
 
-}
+	std::cout << "swaping result: " << new_state << std::endl;
+    Instance inst(new_state.to_ulong(), 0);
+    inst.print_table(3);
+	return new_state.to_ulong();
+};
 
-void print_if_not_null(Instance* t)
+
+Instance test_movement(Instance t, int direction, int num_of_cols)
 {
-    if(t != nullptr)
-        t->print_table();
-    else
-        cout << "t is null!" << endl;
-}
-
-void test_movement(Instance** receiver, Instance* mover, int direction, bool delete_mover)
-{
-    *receiver = mover->move_blank(direction);
-    print_if_not_null(*receiver);
-    if(delete_mover)
-        delete mover;
+    State state = t.move_blank(direction, num_of_cols);
+    if(state == 0){
+        return t;
+    }
+    //cout << "New state generated: " << state << endl;
+    Instance t2(state, num_of_cols);
+    t2.print_table(num_of_cols);
+    return t2;
 }
 
 void test_instance()
 {
-    int board_size = 8;
-    unsigned short int state[16] = {0,1,2,3,4,5,6,7,8};
-    Instance *t = new Instance(8, state);
-    Instance *t2;
+    int vec1[9] = {0,1,2,3,4,5,6,7,8};
+    int vec2[9] = {1,2,3,4,5,6,7,8,0};
+    int vec3[16] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0};
+
+    State state = vec_to_state(vec1, 9);
+    cout << "first state> " << state << endl;;
+    Instance t(state , 0);
+    Instance t_goal(vec_to_state(vec2, 9) , 0);
+
     cout << "Initial State: " << endl;
-    t->print_table();
+    t.print_table(3);
 
-    unsigned short int state2[9] = {1,2,3,4,5,6,7,8,0};
-    t2 = new Instance(8, state2);
-    cout << "t2 should be final state: ";
-    t2->print_table();
-    delete t2;
-
-    cout << "trying to move up, should be null: ";
-    test_movement(&t2, t, UP, false);
     
-    cout << "it should be moved down:";
-    test_movement(&t, t, DOWN, true);
+    //cout << "t2 should be final state: ";
+    t_goal.print_table(3);
 
-    cout << "and down again...:";
-    test_movement(&t, t, DOWN, true);
+    //cout << "trying to move up, should be null: ";
+    t = test_movement(t, UP, 3);
     
-    cout << "here t must be null again: ";
-    test_movement(&t2, t, DOWN, false);
+    //cout << "it should be moved down:";
+    t = test_movement(t, DOWN, 3);
 
-    cout << "and null again, after tryng to move left: ";
-    test_movement(&t2, t, LEFT, false);
-
-    cout << "moving right..";
-    test_movement(&t, t, RIGHT, true);
-
-    cout << "and right again...";
-    test_movement(&t, t, RIGHT, true);
-
-    cout << "Cant move right anymore, should be NULL: ";
-    test_movement(&t2, t, RIGHT, false);
-
-    cout << "moving up!";
-    test_movement(&t, t, UP, true);
+    //cout << "and down again...:";
+    t = test_movement(t, DOWN, 3);
     
-    cout << "moving up!";
-    test_movement(&t, t, UP, true);
+    //cout << "here t must be null again: ";
+    t = test_movement(t, DOWN, 3);
 
-    cout << "moving up again, should be null: ";
-    test_movement(&t2, t, UP, false);
+    //cout << "and null again, after tryng to move left: ";
+    t = test_movement(t, LEFT, 3);
 
-    delete t;
-    delete t2;
+    //cout << "moving right..";
+    t = test_movement(t, RIGHT, 3);
 
+    //cout << "and right again...";
+    t = test_movement(t, RIGHT, 3);
+
+    //cout << "Cant move right anymore, should be NULL: ";
+    t = test_movement(t, RIGHT, 3);
+
+    //cout << "moving up!";
+    t = test_movement(t, UP, 3);
+    
+    //cout << "moving up!";
+    t = test_movement(t, UP, 3);
+
+    //cout << "moving up again, should be null: ";
+    t = test_movement(t, UP, 3);
     
 }

@@ -3,13 +3,14 @@
 
 using namespace std;
 
-Solver::Solver(State goal)
+Solver::Solver()
 {
-    this->goal = goal;
+    //this->goal = goal;
 	explored_nodes = 0;
 	heuristic_avg = 0;
 };
 
+/*
 void Solver::finish_simulation(Instance& final_node, unsigned long execution_time)
 {
 	/// aqui a ideia é setar as variáveis de print_stats para depois imprimir elas com print_status
@@ -21,3 +22,4 @@ void Solver::finish_simulation(Instance& final_node, unsigned long execution_tim
             << heuristic_avg << ","
             << init_state_heuristic << endl;
 };
+*/

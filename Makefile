@@ -1,6 +1,6 @@
 
 CC=g++
-CFLAGS=-Iinclude -g
+CFLAGS=-Iinclude
 SRCDIR=src
 
 all: instance.o solver.o bfs_solver.o

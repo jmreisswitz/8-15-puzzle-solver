@@ -4,13 +4,13 @@
 #include <vector>
 #include <cstdlib>
 //#include "instance.h"
-#include "solver.h"
-#include "bfs_solver.h"
-//#include "tests.h"
+//#include "solver.h"
+//#include "bfs_solver.h"
+#include "tests.h"
 using namespace std;
 
 int num_col, board_size;
-
+/*
 Solver *init(string mode)
 {
 	cout << "Mode: " << mode << endl;
@@ -34,29 +34,36 @@ Solver *init(string mode)
 		Solver s;
 		return s;
 	}
-	*/
+	
 	cout << "should not come here" << endl;
 	return nullptr;
 
 }
-
+*/
+/*
 void run(vector<int>& pos, Solver* solver)
 {
     board_size = pos.size();
     num_col = board_size == 16 ? 4 : 3;
-    State state;
+    State state = vec_to_state(pos);
     // TODO: traduzir o vector pos para State (unsigned long)
     Instance initial(state);
-	initial.print_table();
+	initial.print_table(num_col);
 
 	// t2 = now();
-	s->run(initial);
+	solver->run(initial);
 	// t1 = now();
 	// cout << (t1 - t2)
 }
+*/
+
+
 
 int main(int argc, char *argv[])
 {
+	
+	test_instance();
+	/*
 	if(argc < 11){
 		cout << "Where are the parameters, mate?" << endl;
 		return -1;
@@ -74,6 +81,8 @@ int main(int argc, char *argv[])
         }
         state.push_back(stoi(pos));
 	}
-    run(state, s);
+	*/
+    //run(state, s);
+	
 	return 0;
 }

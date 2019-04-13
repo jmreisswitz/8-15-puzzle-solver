@@ -10,6 +10,9 @@
 
 #define State unsigned long
 
+
+State vec_to_state(int* vec, int size);
+
 class Instance
 {
 	private:
@@ -19,15 +22,16 @@ class Instance
 
 	public:
 		/// constructors
-		Instance(State state, int cost = 0) { this->state = state; this->cost = cost};
+		Instance(State state, int cost = 0) { this->state = state; this->cost = cost;};
 
 		/// public methods
-		Instance* move_blank(int direction);
+		State move_blank(int direction, int num_of_columns);
 		bool is_goal_state();
-		void print_table();
+		void print_table(int num_of_columns);
 
 		/// getters ans setters
 		unsigned short int get_manhattan_distance(State goal);
+		State get_state() {return this->state;};
 };
 
 

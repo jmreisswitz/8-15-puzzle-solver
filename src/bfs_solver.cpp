@@ -1,5 +1,5 @@
 #include <iostream>
-#include <list>
+#include <queue>
 #include <map>
 #include "bfs_solver.h"
 
@@ -9,18 +9,19 @@ BfsSolver::BfsSolver()
 
 bool BfsSolver::run(Instance initial_node)
 {
+	/*
 	init_state_heuristic = initial_node.get_manhattan_distance();
-	std::list<Instance> open;
-	open.push_back(initial_node);
+	std::queue<Instance> open;
+	open.push(initial_node);
 	closed.insert(initial_node);
 	while(!open.empty())
 	{
 		Instance current = open.front();
 		explored_nodes++;
-		open.pop_front();
+		open.pop();
 		for(int i = FIRST; i <= LAST; i++) // for each <a,s'> element of succ(state)
 		{
-			State neighbor = t.move_blank(i);
+			State neighbor = current.move_blank(i, );
 			if (neighbor == 0 || closed.count(neighbor)){ //
 				continue;
 			}
@@ -37,6 +38,6 @@ bool BfsSolver::run(Instance initial_node)
             open.push_back(child_node);
 		}
 	}
-
+	*/
 	return false;
 };
