@@ -16,7 +16,7 @@ class Solver
 		double heuristic_avg;
 		unsigned short int init_state_heuristic;
 		State goal;
-		std::set<Node> closed;
+		std::set<State> closed;
 		int num_of_columns;
 
 		void finish_simulation(Node& node);

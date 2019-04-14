@@ -101,11 +101,14 @@ void Node::print_table(int num_of_columns)
 
 bool Node::operator==(const Node& param) const
 {
-	return param.state == state;
+	//std::cout << "comparing:" << param.state << " and " << this->state << std::endl;
+	return param.state == this->state;
 }
 
+/// set.count uses this operator to count
 bool Node::operator <(const Node& param) const
 {
+	//std::cout << "comparing:" << param.cost << " and " << this->cost << std::endl;
 	return cost < param.cost;
 }
 
