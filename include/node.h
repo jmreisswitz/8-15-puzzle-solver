@@ -1,4 +1,4 @@
-#ifndef INSTANCE_H
+#ifndef Node_H
 #define INSTACE_H
 
 #define FIRST 0 // assim podemos iterar
@@ -14,7 +14,7 @@
 
 State vec_to_state(std::vector<int> vec);
 
-class Instance
+class Node
 {
 	private:
 		/// attributes
@@ -23,7 +23,7 @@ class Instance
 
 	public:
 		/// constructors
-		Instance(State state, int cost = 0) { this->state = state; this->cost = cost;};
+		Node(State state, int cost = 0) { this->state = state; this->cost = cost;};
 
 		/// public methods
 		State move_blank(int direction, int num_of_columns);
@@ -34,9 +34,9 @@ class Instance
 		unsigned short int get_manhattan_distance(State goal);
 		State get_state() {return this->state;};
 		unsigned int get_cost() {return this->cost;};
-		bool operator ==(const Instance& param) const;
-		bool operator <(const Instance& param) const;
+		bool operator ==(const Node& param) const;
+		bool operator <(const Node& param) const;
 };
 
 
-#endif /* INSTANCE_H */
+#endif /* Node_H */

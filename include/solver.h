@@ -1,13 +1,13 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 #include <set>
-#include "instance.h"
+#include "node.h"
 
 class Solver
 {
 	public:
 		Solver();
-		virtual bool run(Instance initial_state) = 0;
+		virtual bool run(Node initial_state) = 0;
 		void set_goal(State goal) {this->goal = goal;};
 		void set_num_of_cols(int num_of_cols) {this->num_of_columns = num_of_cols;};
 
@@ -16,10 +16,10 @@ class Solver
 		double heuristic_avg;
 		unsigned short int init_state_heuristic;
 		State goal;
-		std::set<Instance> closed;
+		std::set<Node> closed;
 		int num_of_columns;
 
-		void finish_simulation(Instance& node);
+		void finish_simulation(Node& node);
 
 };
 

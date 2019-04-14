@@ -3,11 +3,11 @@ CC=g++
 CFLAGS=-Iinclude
 SRCDIR=src
 
-all: instance.o solver.o bfs_solver.o
-	$(CC) -o main main.cpp instance.o solver.o bfs_solver.o $(CFLAGS)
+all: node.o solver.o bfs_solver.o
+	$(CC) -o main main.cpp node.o solver.o bfs_solver.o $(CFLAGS)
 
-instance.o:
-	$(CC) -c $(SRCDIR)/instance.cpp $(CFLAGS)
+node.o:
+	$(CC) -c $(SRCDIR)/node.cpp $(CFLAGS)
 
 
 solver.o:

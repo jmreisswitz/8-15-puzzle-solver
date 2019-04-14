@@ -51,7 +51,7 @@ void run(vector<int>& pos, Solver* solver)
     num_col = board_size == 16 ? 4 : 3;
     State state = vec_to_state(pos);
     
-    Instance initial(state);
+    Node initial(state);
 	//initial.print_table(num_col);
 
 	// t2 = now();
@@ -69,7 +69,7 @@ void run(vector<int>& pos, Solver* solver)
 
 int main(int argc, char *argv[])
 {
-	//test_instance();
+	//test_Node();
 	
 	if(argc < 11){
 		cout << "Where are the parameters, mate?" << endl;

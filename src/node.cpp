@@ -2,7 +2,7 @@
 #include <cmath>
 #include <bitset>
 #include <vector>
-#include "instance.h"
+#include "node.h"
 
 /*
 /// private methods:
@@ -60,7 +60,7 @@ void state_to_vec(State state, int* vec, int vec_size)
 /// public methods
 */
 
-State Instance::move_blank(int direction, int num_of_columns)
+State Node::move_blank(int direction, int num_of_columns)
 {
 	int board_size = num_of_columns == 4 ? 16 : 9;
     int blank_position = get_blank_position(state, num_of_columns);
@@ -85,7 +85,7 @@ State Instance::move_blank(int direction, int num_of_columns)
 	return swap_positions(state, blank_position, end_position);
 };
 
-void Instance::print_table(int num_of_columns)
+void Node::print_table(int num_of_columns)
 {
 	int board_size = num_of_columns == 4 ? 16 : 9;
 	int state_vec[16];
@@ -99,12 +99,12 @@ void Instance::print_table(int num_of_columns)
 	std::cout << std::endl;
 }
 
-bool Instance::operator==(const Instance& param) const
+bool Node::operator==(const Node& param) const
 {
 	return param.state == state;
 }
 
-bool Instance::operator <(const Instance& param) const
+bool Node::operator <(const Node& param) const
 {
 	return cost < param.cost;
 }
@@ -114,7 +114,7 @@ bool Instance::operator <(const Instance& param) const
 /// Getters and Setters
 */
 
-unsigned short int Instance::get_manhattan_distance(State goal)
+unsigned short int Node::get_manhattan_distance(State goal)
 {
 	return 42; //TODO manhattan_distance;
 };
