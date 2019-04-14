@@ -10,8 +10,9 @@
 
 #define State unsigned long
 
+#include <vector>
 
-State vec_to_state(int* vec, int size);
+State vec_to_state(std::vector<int> vec);
 
 class Instance
 {
@@ -32,6 +33,9 @@ class Instance
 		/// getters ans setters
 		unsigned short int get_manhattan_distance(State goal);
 		State get_state() {return this->state;};
+		unsigned int get_cost() {return this->cost;};
+		bool operator ==(const Instance& param) const;
+		bool operator <(const Instance& param) const;
 };
 
 

@@ -5,9 +5,10 @@ using namespace std;
 
 Solver::Solver()
 {
-    //this->goal = goal;
+    this->goal = goal;
 	explored_nodes = 0;
 	heuristic_avg = 0;
+	this->num_of_columns = num_of_columns;
 };
 
 /*

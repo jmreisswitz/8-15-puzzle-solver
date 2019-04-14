@@ -1,44 +1,21 @@
 #include <iostream>
 #include <cmath>
 #include <bitset>
+#include <vector>
 #include "instance.h"
 
 /*
 /// private methods:
 */
-/*
-inline State swap_positions(State state, int blank_position, int tile_position)
-{
-	std::cout << "\nswaping before: " << std::bitset<64>(state) << std::endl;
-	std::cout << "swaping positions: " << blank_position << ", " << tile_position << std::endl;
 
-	State aux = 15; //1111
-	aux = aux<<(tile_position*4);
-    aux = state&aux; // pega os 4 bits 
-	State new_state = (aux<<((blank_position-tile_position)*4))|state; /// new_state não tem mais o blank position de state
-	std::cout << "swaping betwen: " << std::bitset<64>(new_state) << std::endl;
-	aux = 15;
-	aux = ~(aux<<(tile_position*4));
-	new_state = new_state&aux;
-
-	std::cout << "swaping result: " << std::bitset<64>(new_state) << std::endl;
-	return new_state;
-};
-*/
 
 inline State swap_positions(State state, int blank_position, int tile_position)
 {
-	/*
-	std::cout << "\nswaping before: " << std::bitset<64>(state) << std::endl;
-	std::cout << "swaping positions: " << blank_position << ", " << tile_position << std::endl;
-	*/
 	std::bitset<64> new_state(state);
 	for(int i = 0; i < 4; i++){
 		new_state[4*blank_position+i] = new_state[4*tile_position+i];
 		new_state[4*tile_position+i] = 0;
 	}
-
-	//std::cout << "swaping result: " << new_state << std::endl;
 	return new_state.to_ulong();
 };
 
@@ -50,30 +27,22 @@ inline int get_blank_position(State& state, int num_of_columns)
 	State aux = 15; // 1111
     for(int i = 0; i < num_of_columns*num_of_columns; i++)
 	{
-		//std::cout << (aux&state) << std::endl;
 		if((aux&state) == 0){
-			//std::cout << "blank position: " << i << std::endl;
 			return i;
 		}
 		aux = aux<<4;
 	}
-	//std::cout << "blank position not found\n";
 }
 
-State vec_to_state(int* vec, int size)
+State vec_to_state(std::vector<int> vec)
 {
 	State state = 0;
 	State aux;
-	for(int i = 0; i < size; i++){
+	for(int i = 0; i < vec.size(); i++){
 		aux = 0;
 		state = state|((aux|vec[i])<<(i*4));
 		
 	}
-	//std::cout << state<< ":" << std::bitset<64>(state) << std::endl;
-	/*
-	cout << state << endl;
-	cout << bitset<64>(state) << endl;
-	*/
 	return state;
 }
 
@@ -127,7 +96,17 @@ void Instance::print_table(int num_of_columns)
 		if((i+1)%num_of_columns==0 && i>0)
 			std::cout << std::endl;
 	}
-	//std::cout << "Is goal? " << is_goal_state() << std::endl;
+	std::cout << std::endl;
+}
+
+bool Instance::operator==(const Instance& param) const
+{
+	return param.state == state;
+}
+
+bool Instance::operator <(const Instance& param) const
+{
+	return cost < param.cost;
 }
 
 
