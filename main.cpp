@@ -52,7 +52,7 @@ void run(vector<int>& pos, Solver* solver)
     State state = vec_to_state(pos);
     
     Node initial(state);
-	//initial.print_table(num_col);
+	initial.print_table(num_col);
 
 	// t2 = now();
 	cout << "board_size: " << board_size << endl;

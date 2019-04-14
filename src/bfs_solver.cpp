@@ -10,7 +10,7 @@ BfsSolver::BfsSolver()
 
 bool BfsSolver::run(Node initial_node)
 {	
-	init_state_heuristic = initial_node.get_manhattan_distance(goal);
+	init_state_heuristic = initial_node.get_manhattan_distance(3);
 	std::queue<Node> open;
 	open.push(initial_node);
 	closed.insert(initial_node.get_state());
@@ -27,13 +27,13 @@ bool BfsSolver::run(Node initial_node)
 			}
 			Node child_node(neighbor, current.get_cost() + 1);
 			if(neighbor == goal){
-				//child_node.print_table(num_of_columns);
+				child_node.print_table(num_of_columns);
 				//finish_simulation(child_node);
 				
 				return true;
 			}
             //std::cout << "inserindo em closed: ";
-            //child_node.print_table(num_of_columns);
+            child_node.print_table(num_of_columns);
             closed.insert(neighbor);
             open.push(child_node);
 		}

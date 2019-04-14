@@ -91,12 +91,13 @@ void Node::print_table(int num_of_columns)
 	int state_vec[16];
 	state_to_vec(state, state_vec, num_of_columns*num_of_columns);
 	std::cout << "Table " << state << ":" << std::endl;
-	for(int i = 0; i < board_size+1; i++){
+	for(int i = 0; i < board_size; i++){
 		std::cout << state_vec[i] << " ";
 		if((i+1)%num_of_columns==0 && i>0)
 			std::cout << std::endl;
 	}
-	std::cout << std::endl;
+	unsigned short m = get_manhattan_distance(3);
+	std::cout << "Manhattan: " << m << std::endl;
 }
 
 bool Node::operator==(const Node& param) const
@@ -116,10 +117,56 @@ bool Node::operator <(const Node& param) const
 /*
 /// Getters and Setters
 */
-
-unsigned short int Node::get_manhattan_distance(State goal)
+inline unsigned long int uabs_diff(unsigned long v1, unsigned long v2)
 {
-	return 42; //TODO manhattan_distance;
+	if(v1-v2 > 0x7fffffffffff)
+		return v2-v1;
+	return v1-v2;
+}
+
+inline unsigned int get_col_diff(unsigned long number, unsigned long i, unsigned int num_of_cols)
+{
+	unsigned long numbers_distance = uabs_diff(i, number);
+	if(numbers_distance >= num_of_cols){
+		return numbers_distance/num_of_cols;
+	}
+	if(number%num_of_cols == 0){
+		return 1;
+	}
+}
+
+unsigned short int Node::get_manhattan_distance(unsigned int num_of_cols)
+{
+	unsigned long int result = 0;
+	State aux = 15; // 1111
+	unsigned long int number;
+	unsigned int row_diff, col_diff;
+	unsigned int board_size = num_of_cols*num_of_cols;
+	unsigned int x = 0, y = 0;
+	for(unsigned long int i = 1; i < (num_of_cols*num_of_cols) + 1; i++)
+	{
+		number = state&aux;
+		number = number>>((i-1)*4);
+		if(number > 0 && number!=i)
+		{
+			unsigned int suposed_x = (number-1)/num_of_cols;
+			unsigned int suposed_y = (number-1)%num_of_cols;
+			/*
+			std::cout << "number: " << number << ", i: " << i << std::endl;
+			std::cout << "suposed_y: " << suposed_y << ", suposed_x: " << suposed_x << std::endl;
+			std::cout << "curent x: " << x << ",current y: " << y << std::endl;
+			std::cout << "dx: " << uabs_diff(x, suposed_y) << ", dx = " << uabs_diff(y, suposed_x) << std::endl;
+			*/
+			result += uabs_diff(x, suposed_y) + uabs_diff(y, suposed_x);
+		}
+		x++;
+		if(x%num_of_cols== 0){
+			x = 0;
+			y++;
+		}
+		aux = aux<<4;
+	}
+	return (unsigned short int) result; //TODO manhattan_distance;
 };
 
 /*

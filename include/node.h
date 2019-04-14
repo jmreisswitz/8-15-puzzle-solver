@@ -31,7 +31,7 @@ class Node
 		void print_table(int num_of_columns);
 
 		/// getters ans setters
-		unsigned short int get_manhattan_distance(State goal);
+		unsigned short int get_manhattan_distance(unsigned int num_of_cols);
 		State get_state() {return this->state;};
 		unsigned int get_cost() {return this->cost;};
 		bool operator ==(const Node& param) const;
