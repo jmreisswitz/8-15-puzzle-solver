@@ -19,11 +19,15 @@ class Node
 	private:
 		/// attributes
 		State state = 0;
-        unsigned int cost;
+        unsigned short int cost;
+        unsigned short int h;
 
 	public:
 		/// constructors
-		Node(State state, int cost = 0) { this->state = state; this->cost = cost;};
+		Node(State state, int unsigned short cost = 0) { 
+			this->state = state; 
+			this->cost = cost;
+		}
 
 		/// public methods
 		State move_blank(int direction, int num_of_columns);
@@ -31,11 +35,24 @@ class Node
 		void print_table(int num_of_columns);
 
 		/// getters ans setters
-		unsigned short int get_manhattan_distance(unsigned int num_of_cols);
-		State get_state() {return this->state;};
-		unsigned int get_cost() {return this->cost;};
-		bool operator ==(const Node& param) const;
-		bool operator <(const Node& param) const;
+		unsigned short int get_manhattan_distance(uint num_of_cols);
+		
+		inline State get_state() const { 
+			return this->state; 
+		}
+		
+		inline unsigned short int get_cost() const { 
+			return this->cost; 
+		}
+
+		inline bool operator ==(const Node& param) const {
+			return param.state == state;
+		}
+
+		inline bool operator <(const Node& param) const {
+			return param.state < state;
+		}
+
 };
 
 

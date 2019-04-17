@@ -3,26 +3,26 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+#include <chrono>
 
 #include "solver.h"
 #include "bfs_solver.h"
+#include "astar_solver.h"
 //#include "tests.h"
 using namespace std;
-
-int num_col, board_size;
+using namespace chrono;
 
 Solver *init(string mode)
 {
 	cout << "Mode: " << mode << endl;
-	if (mode.find(" -bfs")){
+	if (mode.find("-bfs") != std::string::npos){
 		return new BfsSolver();
+	}
+	else if(mode.find("-astar") != std::string::npos){
+		return new AStarSolver();
 	}
 	/*
 	else if(mode.compare("-idfs")){
-		Solver s;
-		return s;
-	}
-	else if(mode.compare("-astar")){
 		Solver s;
 		return s;
 	}
@@ -40,32 +40,28 @@ Solver *init(string mode)
 
 }
 
-
 void run(vector<int>& pos, Solver* solver)
 {
-	cout << "State readed: ";
-	for (int i = 0; i < pos.size(); i++)
-		cout << pos[i] << ",";
+	cout << "State readed: " << pos[0];
+	for (int i = 1; i < pos.size(); i++)
+		cout << "," << pos[i];
 	cout << endl;
-    board_size = pos.size();
-    num_col = board_size == 16 ? 4 : 3;
+    uint board_size = pos.size();
+    uint num_col = board_size == 9 ? 3 : 4;
     State state = vec_to_state(pos);
     
     Node initial(state);
 	initial.print_table(num_col);
 
-	// t2 = now();
+	auto t1 = high_resolution_clock::now();
 	cout << "board_size: " << board_size << endl;
 	solver->set_goal(board_size == 9 ? 0x0000000087654321 : 0x0FEDCBA987654321);
 	solver->set_num_of_cols(num_col);
 	solver->run(initial);
-	// t1 = now();
-	// cout << (t1 - t2)
+	auto t2 = high_resolution_clock::now();
+	solver->print_stats(duration_cast<milliseconds> (t2 - t1).count());
 	delete solver;
 }
-
-
-
 
 int main(int argc, char *argv[])
 {
@@ -90,6 +86,5 @@ int main(int argc, char *argv[])
 	}
 	run(state, s); // roda o ultimo state
 
-	
 	return 0;
 }

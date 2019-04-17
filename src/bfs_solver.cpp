@@ -2,7 +2,6 @@
 #include <queue>
 #include <map>
 #include "bfs_solver.h"
-#include "solver.h"
 
 BfsSolver::BfsSolver()
 :Solver()
@@ -10,9 +9,14 @@ BfsSolver::BfsSolver()
 
 bool BfsSolver::run(Node initial_node)
 {	
+	// Stats
 	init_state_heuristic = initial_node.get_manhattan_distance(3);
+	final_cost = -1;
+	// Open set
 	std::queue<Node> open;
 	open.push(initial_node);
+	// Closed set
+	std::set<State> closed;
 	closed.insert(initial_node.get_state());
 	while(!open.empty())
 	{
@@ -28,8 +32,7 @@ bool BfsSolver::run(Node initial_node)
 			Node child_node(neighbor, current.get_cost() + 1);
 			if(neighbor == goal){
 				child_node.print_table(num_of_columns);
-				//finish_simulation(child_node);
-				
+				final_cost = child_node.get_cost();
 				return true;
 			}
             //std::cout << "inserindo em closed: ";
@@ -38,6 +41,5 @@ bool BfsSolver::run(Node initial_node)
             open.push(child_node);
 		}
 	}
-	
 	return false;
 };

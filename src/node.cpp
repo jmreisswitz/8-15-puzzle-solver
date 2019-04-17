@@ -19,9 +19,6 @@ inline State swap_positions(State state, int blank_position, int tile_position)
 	return new_state.to_ulong();
 };
 
-
-
-
 inline int get_blank_position(State& state, int num_of_columns)
 {
 	State aux = 15; // 1111
@@ -99,20 +96,6 @@ void Node::print_table(int num_of_columns)
 	unsigned short m = get_manhattan_distance(3);
 	std::cout << "Manhattan: " << m << std::endl;
 }
-
-bool Node::operator==(const Node& param) const
-{
-	//std::cout << "comparing:" << param.state << " and " << this->state << std::endl;
-	return param.state == this->state;
-}
-
-/// set.count uses this operator to count
-bool Node::operator <(const Node& param) const
-{
-	//std::cout << "comparing:" << param.cost << " and " << this->cost << std::endl;
-	return cost < param.cost;
-}
-
 
 /*
 /// Getters and Setters
