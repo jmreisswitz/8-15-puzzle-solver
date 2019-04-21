@@ -12,6 +12,7 @@
 #include "astar_solver.h"
 #include "gbfs_solver.h"
 #include "idfs_solver.h"
+#include "idastar_solver.h"
 //#include "tests.h"
 using namespace std;
 using namespace chrono;
@@ -31,16 +32,9 @@ Solver *init(string& mode)
 	else if(mode.find("-idfs") != string::npos){
 		return new IdfsSolver();
 	}
-	/*
-	else if(mode.compare("-idfs")){
-		Solver s;
-		return s;
+	else if(mode.find("-idastar") != string::npos){
+		return new IdAstarSolver();
 	}
-	else if(mode.compare("-idastar")){
-		Solver s;
-		return s;
-	}
-	*/
 	cout << "Solver not found: " << mode << endl;
 	return nullptr;
 }
