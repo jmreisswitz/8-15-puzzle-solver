@@ -1,10 +1,8 @@
 #include <iostream>
 #include <queue>
-#include <map>
 #include <climits>
+#include <set>
 #include "gbfs_solver.h"
-
-// https://www.cs.cmu.edu/afs/cs/project/jair/pub/volume28/coles07a-html/node11.html
 
 typedef std::pair<unsigned short int, Node> GBFSNode;
 
@@ -18,16 +16,15 @@ typedef std::priority_queue<GBFSNode, std::vector<GBFSNode>, Comp> pqueue;
 
 GbfsSolver::GbfsSolver():Solver() {};
 
-bool GbfsSolver::run(Node initial_node) {
+bool GbfsSolver::run(State initial_state) {
 	// Stats
-	init_state_heuristic = heuristic(initial_node.get_state());
-	final_cost = -1;
+	init_state_heuristic = heuristic(initial_state);
 	// Open set
 	pqueue open;
-	open.push(GBFSNode(init_state_heuristic, initial_node));
+	open.push(GBFSNode(init_state_heuristic, Node(initial_state, 0)));
 	// Closed set
 	std::set<State> closed;
-	closed.insert(initial_node.get_state());
+	closed.insert(initial_state);
 	while(!open.empty()) {
 		unsigned short int h = open.top().first;
 		Node current = open.top().second;

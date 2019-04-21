@@ -4,5 +4,5 @@ class AStarSolver: public Solver
 {
 	public:
 		AStarSolver() : Solver() {}
-		bool run(Node initial_state);
+		bool run(State initial_state);
 };

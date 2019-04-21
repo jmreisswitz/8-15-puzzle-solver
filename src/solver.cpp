@@ -7,12 +7,11 @@ Solver::Solver()
 {
 	expanded_nodes = 0;
 	heuristic_avg = 0;
+	final_cost = NO_SOLUTION;
 };
 
 void Solver::print_stats(unsigned long execution_time)
 {
-	/// aqui a ideia é setar as variáveis de print_stats para depois imprimir elas com print_status
-	/// pode ser que esse método nem seja preciso, sei lá
 	cout<< expanded_nodes << ", "
         << final_cost << ", "
         << execution_time << ", "

@@ -1,28 +1,26 @@
 #include <iostream>
 #include <queue>
-#include <map>
+#include <set>
 #include "bfs_solver.h"
 
 BfsSolver::BfsSolver()
 :Solver()
 {};
 
-bool BfsSolver::run(Node initial_node)
+bool BfsSolver::run(State initial_state)
 {	
 	// Stats
-	init_state_heuristic = heuristic(initial_node.get_state());
-	if (initial_node == goal) {
+	init_state_heuristic = heuristic(initial_state);
+	if (initial_state == goal) {
 		final_cost = 0;
 		return true;
-	} else {
-		final_cost = -1;
 	}
 	// Open set
 	std::queue<Node> open;
-	open.push(initial_node);
+	open.push(Node(initial_state, 0));
 	// Closed set
 	std::set<State> closed;
-	closed.insert(initial_node.get_state());
+	closed.insert(initial_state);
 	while(!open.empty())
 	{
 		Node current = open.front();

@@ -4,11 +4,6 @@
 #include <vector>
 #include "node.h"
 
-/*
-/// private methods:
-*/
-
-
 inline State swap_positions(State state, int blank_position, int tile_position)
 {
 	std::bitset<64> new_state(state);
@@ -52,10 +47,6 @@ void state_to_vec(State state, int* vec, int vec_size)
         vec[i] = 15&aux;
     }
 }
-
-/*
-/// public methods
-*/
 
 State Node::move_blank(int direction, int num_of_columns)
 {

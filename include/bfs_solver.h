@@ -4,5 +4,5 @@ class BfsSolver: public Solver
 {
 	public:
 		BfsSolver();
-		bool run(Node initial_state);
+		bool run(State initial_state);
 };

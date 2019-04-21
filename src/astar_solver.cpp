@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <set>
 #include "astar_solver.h"
 
 typedef std::pair<unsigned short int, Node> AStarNode;
@@ -16,16 +17,15 @@ struct Comp {
 
 typedef std::priority_queue<AStarNode, std::vector<AStarNode>, Comp> pqueue;
 
-bool AStarSolver::run(Node initial_node) {	
+bool AStarSolver::run(State initial_state) {	
 	// Stats
-	init_state_heuristic = heuristic(initial_node.get_state());
-	final_cost = -1;
+	init_state_heuristic = heuristic(initial_state);
 	// Open set
 	pqueue open;
-	open.push(AStarNode(init_state_heuristic, initial_node));
+	open.push(AStarNode(init_state_heuristic, Node(initial_state, 0)));
 	// Closed set
 	std::set<State> closed;
-	closed.insert(initial_node.get_state());
+	closed.insert(initial_state);
 	while(!open.empty()) {
 		unsigned short int h = open.top().first;
 		Node current = open.top().second;

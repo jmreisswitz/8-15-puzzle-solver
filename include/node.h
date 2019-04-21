@@ -19,7 +19,7 @@ class Node
 	private:
 		/// attributes
 		State state = 0;
-        unsigned short int cost;
+        uint cost;
         unsigned short int h;
 
 	public:

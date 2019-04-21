@@ -1,15 +1,16 @@
 #ifndef SOLVER_H
 #define SOLVER_H
-#include <set>
+
 #include "node.h"
+#define NO_SOLUTION -1
 
 class Solver
 {
 	public:
 		Solver();
-		virtual bool run(Node initial_state) = 0;
-		void set_goal(State goal) {this->goal = goal;};
-		void set_num_of_cols(uint num_of_cols) {this->num_of_columns = num_of_cols;};
+		virtual bool run(State initial_state) = 0;
+		void set_goal(State goal) {this->goal = goal;}
+		void set_num_of_cols(uint num_of_cols) {this->num_of_columns = num_of_cols;}
 		void print_stats(unsigned long execution_time);
 
 	protected:
