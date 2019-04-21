@@ -1,28 +1,30 @@
 #include <iostream>
 #include <queue>
-#include "astar_solver.h"
+#include <map>
+#include <climits>
+#include "gbfs_solver.h"
 
-typedef std::pair<unsigned short int, Node> AStarNode;
+// https://www.cs.cmu.edu/afs/cs/project/jair/pub/volume28/coles07a-html/node11.html
+
+typedef std::pair<unsigned short int, Node> GBFSNode;
 
 struct Comp {
-    inline bool operator()(const AStarNode &a, const AStarNode &b) const {
-    	int af = a.second.get_cost() + a.first;
-    	int bf = b.second.get_cost() + b.first;
-    	if (af == bf)
-    		return a.first > b.first;
-    	return af > bf;
+    inline bool operator()(const GBFSNode &a, const GBFSNode &b) const {
+    	a.first > b.first;
     }
 };
 
-typedef std::priority_queue<AStarNode, std::vector<AStarNode>, Comp> pqueue;
+typedef std::priority_queue<GBFSNode, std::vector<GBFSNode>, Comp> pqueue;
 
-bool AStarSolver::run(Node initial_node) {	
+GbfsSolver::GbfsSolver():Solver() {};
+
+bool GbfsSolver::run(Node initial_node) {
 	// Stats
 	init_state_heuristic = heuristic(initial_node.get_state());
 	final_cost = -1;
 	// Open set
 	pqueue open;
-	open.push(AStarNode(init_state_heuristic, initial_node));
+	open.push(GBFSNode(init_state_heuristic, initial_node));
 	// Closed set
 	std::set<State> closed;
 	closed.insert(initial_node.get_state());
@@ -44,7 +46,7 @@ bool AStarSolver::run(Node initial_node) {
 				continue; // Ignore if can't move in that direction
 			h = heuristic(neighbor);
 			Node child_node(neighbor, current.get_cost() + 1);
-            open.push(AStarNode(h, child_node));
+            open.push(GBFSNode(h, child_node));
 		}
 	}
 	return false;

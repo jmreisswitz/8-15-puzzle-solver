@@ -10,8 +10,13 @@ BfsSolver::BfsSolver()
 bool BfsSolver::run(Node initial_node)
 {	
 	// Stats
-	init_state_heuristic = initial_node.get_manhattan_distance(3);
-	final_cost = -1;
+	init_state_heuristic = heuristic(initial_node.get_state());
+	if (initial_node == goal) {
+		final_cost = 0;
+		return true;
+	} else {
+		final_cost = -1;
+	}
 	// Open set
 	std::queue<Node> open;
 	open.push(initial_node);
@@ -21,8 +26,9 @@ bool BfsSolver::run(Node initial_node)
 	while(!open.empty())
 	{
 		Node current = open.front();
-		explored_nodes++;
 		open.pop();
+		// Expand neighbors
+		expanded_nodes++;
 		for(int i = FIRST; i <= LAST; i++) // for each <a,s'> element of succ(state)
 		{
 			State neighbor = current.move_blank(i, num_of_columns);			

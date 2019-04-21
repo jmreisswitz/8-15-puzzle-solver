@@ -13,14 +13,17 @@ class Solver
 		void print_stats(unsigned long execution_time);
 
 	protected:
-		unsigned long int explored_nodes;
+		unsigned long int expanded_nodes;
 		double heuristic_avg;
+		uint heuristic_count;
 		unsigned short int init_state_heuristic;
 		uint final_cost;
 
 		State goal;
 		uint num_of_columns;
 		uint board_size;
+
+		unsigned short int heuristic(State state);
 
 };
 

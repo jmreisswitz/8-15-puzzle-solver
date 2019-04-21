@@ -33,9 +33,6 @@ class Node
 		State move_blank(int direction, int num_of_columns);
 		bool is_goal_state();
 		void print_table(int num_of_columns);
-
-		/// getters ans setters
-		unsigned short int get_manhattan_distance(uint num_of_cols);
 		
 		inline State get_state() const { 
 			return this->state; 

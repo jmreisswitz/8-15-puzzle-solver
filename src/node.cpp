@@ -93,64 +93,7 @@ void Node::print_table(int num_of_columns)
 		if((i+1)%num_of_columns==0 && i>0)
 			std::cout << std::endl;
 	}
-	unsigned short m = get_manhattan_distance(3);
-	std::cout << "Manhattan: " << m << std::endl;
 }
-
-/*
-/// Getters and Setters
-*/
-inline unsigned long int uabs_diff(unsigned long v1, unsigned long v2)
-{
-	if(v1-v2 > 0x7fffffffffff)
-		return v2-v1;
-	return v1-v2;
-}
-
-inline unsigned int get_col_diff(unsigned long number, unsigned long i, unsigned int num_of_cols)
-{
-	unsigned long numbers_distance = uabs_diff(i, number);
-	if(numbers_distance >= num_of_cols){
-		return numbers_distance/num_of_cols;
-	}
-	if(number%num_of_cols == 0){
-		return 1;
-	}
-}
-
-unsigned short int Node::get_manhattan_distance(unsigned int num_of_cols)
-{
-	unsigned long int result = 0;
-	State aux = 15; // 1111
-	unsigned long int number;
-	unsigned int row_diff, col_diff;
-	unsigned int board_size = num_of_cols*num_of_cols;
-	unsigned int x = 0, y = 0;
-	for(unsigned long int i = 1; i < (num_of_cols*num_of_cols) + 1; i++)
-	{
-		number = state&aux;
-		number = number>>((i-1)*4);
-		if(number > 0 && number!=i)
-		{
-			unsigned int suposed_x = (number-1)/num_of_cols;
-			unsigned int suposed_y = (number-1)%num_of_cols;
-			/*
-			std::cout << "number: " << number << ", i: " << i << std::endl;
-			std::cout << "suposed_y: " << suposed_y << ", suposed_x: " << suposed_x << std::endl;
-			std::cout << "curent x: " << x << ",current y: " << y << std::endl;
-			std::cout << "dx: " << uabs_diff(x, suposed_y) << ", dx = " << uabs_diff(y, suposed_x) << std::endl;
-			*/
-			result += uabs_diff(x, suposed_y) + uabs_diff(y, suposed_x);
-		}
-		x++;
-		if(x%num_of_cols== 0){
-			x = 0;
-			y++;
-		}
-		aux = aux<<4;
-	}
-	return (unsigned short int) result; //TODO manhattan_distance;
-};
 
 /*
  5

@@ -1,12 +1,15 @@
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <cstdlib>
 #include <chrono>
+#include <sstream>
 
 #include "solver.h"
 #include "bfs_solver.h"
+#include "gbfs_solver.h"
 #include "astar_solver.h"
 //#include "tests.h"
 using namespace std;
@@ -15,13 +18,13 @@ using namespace chrono;
 Solver *init(string& mode)
 {
 	//cout << "Mode: " << mode << endl;
-	if (mode.find("-bfs") != std::string::npos){
+	if (mode.find("-bfs") != string::npos){
 		return new BfsSolver();
 	}
-	else if(mode.find("-gbfs") != std::string::npos){
-		return new AStarSolver();
+	else if(mode.find("-gbfs") != string::npos){
+		return new GbfsSolver();
 	}
-	else if(mode.find("-astar") != std::string::npos){
+	else if(mode.find("-astar") != string::npos){
 		return new AStarSolver();
 	}
 	/*
@@ -62,16 +65,41 @@ void run(vector<int>& pos, string& solverName)
 	solver->print_stats(duration_cast<milliseconds> (t2 - t1).count());
 }
 
+void readFile(string& name, string& solverName) {
+	ifstream file(name);
+	if (!file.is_open())
+		cout << "Could not read file: " << name << endl;
+	string line;
+	while (getline(file,line)) {
+		istringstream linestream(line);
+		vector<int> state;
+		int i;
+		while(linestream >> i) state.push_back(i);
+		run(state, solverName);
+	}
+	file.close();
+}
+
 int main(int argc, char *argv[])
 {
 	//test_Node();
 	
-	if(argc < 11){
+	if(argc < 4){
 		cout << "Where are the parameters, mate?" << endl;
 		return -1;
 	}
 	vector<int> state;
 	string solver(argv[1]);
+
+	{
+		string fileflag(argv[2]);
+		if (fileflag.find("-f") != string::npos) {
+			string file(argv[3]);
+			readFile(file, solver);
+			return 0;
+		}
+	}
+
 	for (int i = 2; i < argc; i++) {
         string pos(argv[i]);
         if (pos.back() == ',') {
