@@ -2,21 +2,22 @@
 CC=g++
 CFLAGS=-Iinclude
 SRCDIR=src
+BINDIR=bin
 
-all: node.o solver.o bfs_solver.o astar_solver.o
-	$(CC) -o main main.cpp node.o solver.o bfs_solver.o astar_solver.o $(CFLAGS)
+all: $(BINDIR)/node.o $(BINDIR)/solver.o $(BINDIR)/bfs_solver.o $(BINDIR)/astar_solver.o
+	$(CC) -o main main.cpp $(BINDIR)/node.o $(BINDIR)/solver.o $(BINDIR)/bfs_solver.o $(BINDIR)/astar_solver.o $(CFLAGS)
 
-node.o:
-	$(CC) -c $(SRCDIR)/node.cpp $(CFLAGS)
+$(BINDIR)/node.o:
+	$(CC) -c $(SRCDIR)/node.cpp -o $(BINDIR)/node.o $(CFLAGS)
 
-solver.o:
-	$(CC) -c $(SRCDIR)/solver.cpp $(CFLAGS)
+$(BINDIR)/solver.o:
+	$(CC) -c $(SRCDIR)/solver.cpp -o $(BINDIR)/solver.o $(CFLAGS)
 
-bfs_solver.o: solver.o
-	$(CC) -c $(SRCDIR)/bfs_solver.cpp $(CFLAGS)
+$(BINDIR)/bfs_solver.o: $(BINDIR)/solver.o
+	$(CC) -c $(SRCDIR)/bfs_solver.cpp -o $(BINDIR)/bfs_solver.o $(CFLAGS)
 
-astar_solver.o: solver.o
-	$(CC) -c $(SRCDIR)/astar_solver.cpp $(CFLAGS)
+$(BINDIR)/astar_solver.o: $(BINDIR)/solver.o
+	$(CC) -c $(SRCDIR)/astar_solver.cpp -o $(BINDIR)/astar_solver.o $(CFLAGS)
 
 clean:
-	rm *.o
+	rm $(BINDIR)/*.o

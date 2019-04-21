@@ -1,7 +1,7 @@
 #include <iostream>
 #include <bitset>
-#include "instance.h"
-//#include "../src/instance.cpp"
+#include "Node.h"
+//#include "../src/Node.cpp"
 
 using namespace std;
 
@@ -22,25 +22,25 @@ inline State swap_positions(State state, int blank_position, int tile_position)
 	}
 
 	std::cout << "swaping result: " << new_state << std::endl;
-    Instance inst(new_state.to_ulong(), 0);
+    Node inst(new_state.to_ulong(), 0);
     inst.print_table(3);
 	return new_state.to_ulong();
 };
 
 
-Instance test_movement(Instance t, int direction, int num_of_cols)
+Node test_movement(Node t, int direction, int num_of_cols)
 {
     State state = t.move_blank(direction, num_of_cols);
     if(state == 0){
         return t;
     }
     //cout << "New state generated: " << state << endl;
-    Instance t2(state, num_of_cols);
+    Node t2(state, num_of_cols);
     t2.print_table(num_of_cols);
     return t2;
 }
 
-void test_instance()
+void test_Node()
 {
     int vec1[9] = {0,1,2,3,4,5,6,7,8};
     int vec2[9] = {1,2,3,4,5,6,7,8,0};
@@ -48,8 +48,8 @@ void test_instance()
 
     State state = vec_to_state(vec1, 9);
     cout << "first state> " << state << endl;;
-    Instance t(state , 0);
-    Instance t_goal(vec_to_state(vec2, 9) , 0);
+    Node t(state , 0);
+    Node t_goal(vec_to_state(vec2, 9) , 0);
 
     cout << "Initial State: " << endl;
     t.print_table(3);

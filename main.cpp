@@ -12,11 +12,14 @@
 using namespace std;
 using namespace chrono;
 
-Solver *init(string mode)
+Solver *init(string& mode)
 {
-	cout << "Mode: " << mode << endl;
+	//cout << "Mode: " << mode << endl;
 	if (mode.find("-bfs") != std::string::npos){
 		return new BfsSolver();
+	}
+	else if(mode.find("-gbfs") != std::string::npos){
+		return new AStarSolver();
 	}
 	else if(mode.find("-astar") != std::string::npos){
 		return new AStarSolver();
@@ -30,37 +33,33 @@ Solver *init(string mode)
 		Solver s;
 		return s;
 	}
-	else if(mode.compare("-gbfs")){
-		Solver s;
-		return s;
-	}
 	*/
-	cout << "should not come here" << endl;
+	cout << "Solver not found: " << mode << endl;
 	return nullptr;
-
 }
 
-void run(vector<int>& pos, Solver* solver)
+void run(vector<int>& pos, string& solverName)
 {
-	cout << "State readed: " << pos[0];
+	Solver* solver = init(solverName);
+	
+	/*cout << "State readed: " << pos[0];
 	for (int i = 1; i < pos.size(); i++)
 		cout << "," << pos[i];
-	cout << endl;
+	cout << endl;*/
     uint board_size = pos.size();
     uint num_col = board_size == 9 ? 3 : 4;
     State state = vec_to_state(pos);
     
     Node initial(state);
-	initial.print_table(num_col);
+	//initial.print_table(num_col);
 
 	auto t1 = high_resolution_clock::now();
-	cout << "board_size: " << board_size << endl;
+	//cout << "board_size: " << board_size << endl;
 	solver->set_goal(board_size == 9 ? 0x0000000087654321 : 0x0FEDCBA987654321);
 	solver->set_num_of_cols(num_col);
 	solver->run(initial);
 	auto t2 = high_resolution_clock::now();
 	solver->print_stats(duration_cast<milliseconds> (t2 - t1).count());
-	delete solver;
 }
 
 int main(int argc, char *argv[])
@@ -71,20 +70,21 @@ int main(int argc, char *argv[])
 		cout << "Where are the parameters, mate?" << endl;
 		return -1;
 	}
-    Solver* s = init(argv[1]);
 	vector<int> state;
+	string solver(argv[1]);
 	for (int i = 2; i < argc; i++) {
         string pos(argv[i]);
         if (pos.back() == ',') {
             pos.pop_back();
             state.push_back(stoi(pos));
-            run(state, s);
+            run(state, solver);
             state.clear();
+            //cout << endl;
             continue;
         }
         state.push_back(stoi(pos));
 	}
-	run(state, s); // roda o ultimo state
+	run(state, solver); // roda o ultimo state
 
 	return 0;
 }

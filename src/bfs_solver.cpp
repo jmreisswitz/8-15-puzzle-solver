@@ -31,12 +31,12 @@ bool BfsSolver::run(Node initial_node)
 			}
 			Node child_node(neighbor, current.get_cost() + 1);
 			if(neighbor == goal){
-				child_node.print_table(num_of_columns);
+				//child_node.print_table(num_of_columns);
 				final_cost = child_node.get_cost();
 				return true;
 			}
             //std::cout << "inserindo em closed: ";
-            child_node.print_table(num_of_columns);
+            //child_node.print_table(num_of_columns);
             closed.insert(neighbor);
             open.push(child_node);
 		}

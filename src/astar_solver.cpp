@@ -34,7 +34,6 @@ bool AStarSolver::run(Node initial_node) {
 		closed.insert(current.get_state());
 		// Check if it's goal
 		if(h == 0) {
-			current.print_table(num_of_columns);
 			final_cost = current.get_cost();
 			return true;
 		}
