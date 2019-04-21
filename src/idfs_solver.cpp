@@ -1,13 +1,11 @@
 #include <iostream>
 #include "idfs_solver.h"
 
-IdfsSolver::IdfsSolver()
-:Solver()
-{};
+IdfsSolver::IdfsSolver() : Solver() {};
 
 int IdfsSolver::dfs(int depth, State state) {
 	if (depth == 0)
-		return -1;
+		return NO_SOLUTION;
 	expanded_nodes++;
 	Node current(state, 0);
 	for(int i = FIRST; i <= LAST; i++) {
@@ -15,11 +13,13 @@ int IdfsSolver::dfs(int depth, State state) {
 		if (neighbor == 0) 
 			continue;
 		if (neighbor == goal)
-			return 0;
+			return 1;
 		int solution = dfs(depth - 1, neighbor);
-		if (solution != -1)
+		if (solution != NO_SOLUTION) {
 			return solution + 1;
+		}
 	}
+	return NO_SOLUTION;
 }
 
 bool IdfsSolver::run(State initial_state) {	
@@ -28,9 +28,9 @@ bool IdfsSolver::run(State initial_state) {
 		final_cost = 0;
 		return true;
 	}
-	int depth = 1;
+	int depth = init_state_heuristic;
 	do {
 		final_cost = dfs(depth++, initial_state);
-	} while (final_cost == -1);
+	} while (final_cost == NO_SOLUTION);
 	return true;
 }

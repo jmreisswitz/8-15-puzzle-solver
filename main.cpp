@@ -9,8 +9,9 @@
 
 #include "solver.h"
 #include "bfs_solver.h"
-#include "gbfs_solver.h"
 #include "astar_solver.h"
+#include "gbfs_solver.h"
+#include "idfs_solver.h"
 //#include "tests.h"
 using namespace std;
 using namespace chrono;
@@ -21,11 +22,14 @@ Solver *init(string& mode)
 	if (mode.find("-bfs") != string::npos){
 		return new BfsSolver();
 	}
+	else if(mode.find("-astar") != string::npos){
+		return new AStarSolver();
+	}
 	else if(mode.find("-gbfs") != string::npos){
 		return new GbfsSolver();
 	}
-	else if(mode.find("-astar") != string::npos){
-		return new AStarSolver();
+	else if(mode.find("-idfs") != string::npos){
+		return new IdfsSolver();
 	}
 	/*
 	else if(mode.compare("-idfs")){
