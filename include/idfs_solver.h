@@ -6,5 +6,5 @@ class IdfsSolver: public Solver
 		IdfsSolver();
 		bool run(State initial_state);
 	private:
-		int dfs(int depth, State current);
+		uint dfs(uint depth, State current, State parent);
 };

@@ -52,7 +52,7 @@ void run(vector<int>& pos, string& solverName)
     State state = vec_to_state(pos);
 
 	//cout << "board_size: " << board_size << endl;
-	solver->set_goal(board_size == 9 ? 0x0000000087654321 : 0x0FEDCBA987654321);
+	solver->set_goal(board_size == 9 ? 0x0000000876543210 : 0xFEDCBA9876543210);
 	solver->set_num_of_cols(num_col);
 	auto t1 = high_resolution_clock::now();
 	solver->run(state);

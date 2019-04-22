@@ -25,7 +25,6 @@ bool AStarSolver::run(State initial_state) {
 	open.push(AStarNode(init_state_heuristic, Node(initial_state, 0)));
 	// Closed set
 	std::set<State> closed;
-	closed.insert(initial_state);
 	while(!open.empty()) {
 		uint8_t h = open.top().first;
 		Node current = open.top().second;
@@ -39,7 +38,7 @@ bool AStarSolver::run(State initial_state) {
 		// Expand neighbors
 		expanded_nodes++;
 		for (int i = FIRST; i <= LAST; i++) { // For each direction
-			State neighbor = current.move_blank(i, num_of_columns);			
+			State neighbor = current.move_blank(i, num_of_columns);		
 			if (neighbor == 0 || closed.count(neighbor) > 0)
 				continue; // Ignore if can't move in that direction
 			h = heuristic(neighbor);

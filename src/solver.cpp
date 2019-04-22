@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#define LINEAR_CONFLITC
+
 Solver::Solver()
 {
 	expanded_nodes = 0;
@@ -41,12 +43,16 @@ inline uint get_col_diff(unsigned long number, unsigned long i, unsigned int num
 
 inline uint8_t get_manhattan_distance(uint num_of_cols, State state)
 {
+
+	#ifdef LINEAR_CONFLITC
 	int8_t swap_col[num_of_cols];
 	int8_t swap_row[num_of_cols];
 	uint8_t col_conflicts = 0, row_conflicts = 0;
 	for (int i = 0; i < num_of_cols; i++) {
 		swap_col[i] = swap_row[i] = -1;
 	}
+	#endif
+
 	uint8_t result = 0;
 	unsigned long int aux = 15; // 1111
 	unsigned long int number;
@@ -56,21 +62,13 @@ inline uint8_t get_manhattan_distance(uint num_of_cols, State state)
 	{
 		number = state&aux;
 		number = number>>(i*4);
-		if(number > 0 && number!=i+1)
+		if(number > 0 && number!=i)
 		{
-			number--;
 			uint8_t suposed_x = number % num_of_cols;
 			uint8_t suposed_y = number / num_of_cols;
-			//std::cout << (int)suposed_x << " " << (int)suposed_y << std::endl;
-			/*
-			std::cout << "number: " << number << ", i: " << i << std::endl;
-			std::cout << "suposed_y: " << suposed_y << ", suposed_x: " << suposed_x << std::endl;
-			std::cout << "curent x: " << x << ",current y: " << y << std::endl;
-			std::cout << "dx: " << uabs_diff(x, suposed_y) << ", dx = " << uabs_diff(y, suposed_x) << std::endl;
-			*/
 			result += uabs(x, suposed_x) + uabs(y, suposed_y);
-			// Vertical conflicts
 
+			#ifdef LINEAR_CONFLITC
 			// Horizontal conflicts
 			if (suposed_y == y) {
 				if (swap_row[y] > x)
@@ -83,6 +81,8 @@ inline uint8_t get_manhattan_distance(uint num_of_cols, State state)
 					col_conflicts++;
 				swap_col[x] = suposed_y;
 			}
+			#endif
+
 		}
 		x++;
 		if(x%num_of_cols== 0){
@@ -91,8 +91,12 @@ inline uint8_t get_manhattan_distance(uint num_of_cols, State state)
 		}
 		aux = aux<<4;
 	}
-	//std::cout << result << " " << col_conflicts << std::endl;
-	return result + row_conflicts + col_conflicts;
+
+	#ifdef LINEAR_CONFLITC
+	result += row_conflicts + col_conflicts;
+	#endif
+
+	return result;
 };
 
 uint8_t Solver::heuristic(State state) {
