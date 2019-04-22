@@ -15,12 +15,17 @@ Solver::Solver()
 
 void Solver::print_stats(unsigned long int execution_time)
 {
-	cout<< expanded_nodes << ", "
-        << final_cost << ", "
-        << execution_time / 1000.0 << ", "
-        << 1.0 * heuristic_avg / heuristic_count << ", "
-        << (int) init_state_heuristic << endl;
-};
+	cout << expanded_nodes << ", ";
+
+	if (final_cost == NO_SOLUTION)
+		cout << "-, ";
+	else
+		cout << final_cost << ", ";
+
+    cout << execution_time / 1000.0 << ", "
+         << 1.0 * heuristic_avg / heuristic_count << ", "
+         << (int) init_state_heuristic << endl;
+}
 
 /*
 /// Heuristic

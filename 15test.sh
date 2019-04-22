@@ -1,1 +1,0 @@
-./main -astar -f 15puzzle_instances.txt > "15puzzle_astar.txt"
