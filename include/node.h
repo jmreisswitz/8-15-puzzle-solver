@@ -11,6 +11,7 @@
 #define State unsigned long
 
 #include <vector>
+#include <stdint.h>
 
 State vec_to_state(std::vector<int> vec);
 
@@ -20,25 +21,23 @@ class Node
 		/// attributes
 		State state = 0;
         uint cost;
-        unsigned short int h;
 
 	public:
 		/// constructors
-		Node(State state, int unsigned short cost = 0) { 
+		Node(State state, uint cost = 0) { 
 			this->state = state; 
 			this->cost = cost;
 		}
 
 		/// public methods
 		State move_blank(int direction, int num_of_columns);
-		bool is_goal_state();
 		void print_table(int num_of_columns);
 		
 		inline State get_state() const { 
 			return this->state; 
 		}
 		
-		inline unsigned short int get_cost() const { 
+		inline uint get_cost() const { 
 			return this->cost; 
 		}
 
@@ -49,7 +48,6 @@ class Node
 		inline bool operator <(const Node& param) const {
 			return param.state < state;
 		}
-
 };
 
 

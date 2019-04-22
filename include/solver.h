@@ -11,20 +11,20 @@ class Solver
 		virtual bool run(State initial_state) = 0;
 		void set_goal(State goal) {this->goal = goal;}
 		void set_num_of_cols(uint num_of_cols) {this->num_of_columns = num_of_cols;}
-		void print_stats(unsigned long execution_time);
+		void print_stats(unsigned long int execution_time);
 
 	protected:
 		unsigned long int expanded_nodes;
-		double heuristic_avg;
+		uint8_t init_state_heuristic;
+		uint heuristic_avg;
 		uint heuristic_count;
-		unsigned short int init_state_heuristic;
 		uint final_cost;
 
 		State goal;
 		uint num_of_columns;
 		uint board_size;
 
-		unsigned short int heuristic(State state);
+		uint8_t heuristic(State state);
 
 };
 

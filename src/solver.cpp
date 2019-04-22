@@ -7,31 +7,30 @@ Solver::Solver()
 {
 	expanded_nodes = 0;
 	heuristic_avg = 0;
+	heuristic_count = 0;
 	final_cost = NO_SOLUTION;
 };
 
-void Solver::print_stats(unsigned long execution_time)
+void Solver::print_stats(unsigned long int execution_time)
 {
 	cout<< expanded_nodes << ", "
         << final_cost << ", "
-        << execution_time << ", "
-        << heuristic_avg << ", "
-        << init_state_heuristic << endl;
+        << execution_time / 1000.0 << ", "
+        << 1.0 * heuristic_avg / heuristic_count << ", "
+        << (int) init_state_heuristic << endl;
 };
 
 /*
 /// Heuristic
 */
-inline unsigned long int uabs_diff(unsigned long v1, unsigned long v2)
-{
-	if(v1-v2 > 0x7fffffffffff)
-		return v2-v1;
-	return v1-v2;
+
+inline uint8_t uabs(uint8_t x, uint8_t y) {
+	return x > y ? x - y : y - x;
 }
 
-inline unsigned int get_col_diff(unsigned long number, unsigned long i, unsigned int num_of_cols)
+inline uint get_col_diff(unsigned long number, unsigned long i, unsigned int num_of_cols)
 {
-	unsigned long numbers_distance = uabs_diff(i, number);
+	uint numbers_distance = uabs(i, number);
 	if(numbers_distance >= num_of_cols){
 		return numbers_distance/num_of_cols;
 	}
@@ -40,29 +39,50 @@ inline unsigned int get_col_diff(unsigned long number, unsigned long i, unsigned
 	}
 }
 
-inline unsigned short int get_manhattan_distance(unsigned int num_of_cols, State state)
+inline uint8_t get_manhattan_distance(uint num_of_cols, State state)
 {
-	unsigned long int result = 0;
-	State aux = 15; // 1111
+	int8_t swap_col[num_of_cols];
+	int8_t swap_row[num_of_cols];
+	uint8_t col_conflicts = 0, row_conflicts = 0;
+	for (int i = 0; i < num_of_cols; i++) {
+		swap_col[i] = swap_row[i] = -1;
+	}
+	uint8_t result = 0;
+	unsigned long int aux = 15; // 1111
 	unsigned long int number;
-	unsigned int row_diff, col_diff;
-	unsigned int board_size = num_of_cols*num_of_cols;
-	unsigned int x = 0, y = 0;
-	for(unsigned long int i = 1; i < (num_of_cols*num_of_cols) + 1; i++)
+	uint8_t board_size = num_of_cols*num_of_cols;
+	uint8_t x = 0, y = 0;
+	for(uint8_t i = 0; i < board_size; i++)
 	{
 		number = state&aux;
-		number = number>>((i-1)*4);
-		if(number > 0 && number!=i)
+		number = number>>(i*4);
+		if(number > 0 && number!=i+1)
 		{
-			unsigned int suposed_x = (number-1)/num_of_cols;
-			unsigned int suposed_y = (number-1)%num_of_cols;
+			number--;
+			uint8_t suposed_x = number % num_of_cols;
+			uint8_t suposed_y = number / num_of_cols;
+			//std::cout << (int)suposed_x << " " << (int)suposed_y << std::endl;
 			/*
 			std::cout << "number: " << number << ", i: " << i << std::endl;
 			std::cout << "suposed_y: " << suposed_y << ", suposed_x: " << suposed_x << std::endl;
 			std::cout << "curent x: " << x << ",current y: " << y << std::endl;
 			std::cout << "dx: " << uabs_diff(x, suposed_y) << ", dx = " << uabs_diff(y, suposed_x) << std::endl;
 			*/
-			result += uabs_diff(x, suposed_y) + uabs_diff(y, suposed_x);
+			result += uabs(x, suposed_x) + uabs(y, suposed_y);
+			// Vertical conflicts
+
+			// Horizontal conflicts
+			if (suposed_y == y) {
+				if (swap_row[y] > x)
+					row_conflicts++;
+				swap_row[y] = suposed_x;
+			}
+			// Vertical conflicts
+			if (suposed_x == x) {
+				if (swap_col[x] > y)
+					col_conflicts++;
+				swap_col[x] = suposed_y;
+			}
 		}
 		x++;
 		if(x%num_of_cols== 0){
@@ -71,9 +91,13 @@ inline unsigned short int get_manhattan_distance(unsigned int num_of_cols, State
 		}
 		aux = aux<<4;
 	}
-	return (unsigned short int) result;
+	//std::cout << result << " " << col_conflicts << std::endl;
+	return result + row_conflicts + col_conflicts;
 };
 
-unsigned short int Solver::heuristic(State state) {
-	return get_manhattan_distance(num_of_columns, state);
+uint8_t Solver::heuristic(State state) {
+	heuristic_count++;
+	uint8_t h = get_manhattan_distance(num_of_columns, state);
+	heuristic_avg += h;
+	return h;
 }

@@ -3,7 +3,7 @@
 #include <set>
 #include "astar_solver.h"
 
-typedef std::pair<unsigned short int, Node> AStarNode;
+typedef std::pair<uint8_t, Node> AStarNode;
 
 struct Comp {
     inline bool operator()(const AStarNode &a, const AStarNode &b) const {
@@ -27,7 +27,7 @@ bool AStarSolver::run(State initial_state) {
 	std::set<State> closed;
 	closed.insert(initial_state);
 	while(!open.empty()) {
-		unsigned short int h = open.top().first;
+		uint8_t h = open.top().first;
 		Node current = open.top().second;
 		open.pop();
 		closed.insert(current.get_state());

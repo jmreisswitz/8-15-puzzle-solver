@@ -4,7 +4,7 @@
 #include <set>
 #include "gbfs_solver.h"
 
-typedef std::pair<unsigned short int, Node> GBFSNode;
+typedef std::pair<uint8_t, Node> GBFSNode;
 
 struct Comp {
     inline bool operator()(const GBFSNode &a, const GBFSNode &b) const {
@@ -26,7 +26,7 @@ bool GbfsSolver::run(State initial_state) {
 	std::set<State> closed;
 	closed.insert(initial_state);
 	while(!open.empty()) {
-		unsigned short int h = open.top().first;
+		uint8_t h = open.top().first;
 		Node current = open.top().second;
 		open.pop();
 		closed.insert(current.get_state());

@@ -16,7 +16,7 @@ pair<uint, uint> IdAstarSolver::dfs(Node current, uint f_limit) {
 		// If reached goal
 		if (neighbor == goal)
 			return pair<uint, uint>(neighbor_g, f_limit);
-		int neighbor_f = heuristic(neighbor) + neighbor_g;
+		uint neighbor_f = heuristic(neighbor) + neighbor_g;
 		// If reached limit
 		if (neighbor_f > f_limit) {
 			if (neighbor_f < next_limit)
@@ -41,7 +41,7 @@ bool IdAstarSolver::run(State initial_state) {
 		final_cost = 0;
 		return true;
 	}
-	int f_limit = init_state_heuristic;
+	uint f_limit = init_state_heuristic;
 	Node initial_node(initial_state, 0);
 	do {
 		pair<uint, uint> solution = dfs(initial_node, f_limit);

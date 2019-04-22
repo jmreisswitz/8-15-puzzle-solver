@@ -28,7 +28,7 @@ bool IdfsSolver::run(State initial_state) {
 		final_cost = 0;
 		return true;
 	}
-	int depth = init_state_heuristic;
+	uint depth = init_state_heuristic;
 	do {
 		final_cost = dfs(depth++, initial_state);
 	} while (final_cost == NO_SOLUTION);

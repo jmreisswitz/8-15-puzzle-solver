@@ -51,13 +51,13 @@ void run(vector<int>& pos, string& solverName)
     uint num_col = board_size == 9 ? 3 : 4;
     State state = vec_to_state(pos);
 
-	auto t1 = high_resolution_clock::now();
 	//cout << "board_size: " << board_size << endl;
 	solver->set_goal(board_size == 9 ? 0x0000000087654321 : 0x0FEDCBA987654321);
 	solver->set_num_of_cols(num_col);
+	auto t1 = high_resolution_clock::now();
 	solver->run(state);
 	auto t2 = high_resolution_clock::now();
-	solver->print_stats(duration_cast<milliseconds> (t2 - t1).count());
+	solver->print_stats(duration_cast<microseconds> (t2 - t1).count());
 }
 
 void readFile(string& name, string& solverName) {
