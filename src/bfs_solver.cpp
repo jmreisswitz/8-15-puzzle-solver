@@ -1,11 +1,10 @@
 #include <iostream>
 #include <queue>
-#include <set>
+#include <unordered_set>
 #include "bfs_solver.h"
+#define set std::unordered_set
 
-BfsSolver::BfsSolver()
-:Solver()
-{};
+BfsSolver::BfsSolver() : Solver() {};
 
 bool BfsSolver::run(State initial_state)
 {	
@@ -19,7 +18,7 @@ bool BfsSolver::run(State initial_state)
 	std::queue<Node> open;
 	open.push(Node(initial_state, 0));
 	// Closed set
-	std::set<State> closed;
+	set<State> closed;
 	closed.insert(initial_state);
 	while(!open.empty())
 	{

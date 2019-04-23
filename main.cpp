@@ -57,7 +57,7 @@ void run(vector<int>& pos, string& solverName)
 	auto t1 = high_resolution_clock::now();
 	solver->run(state);
 	auto t2 = high_resolution_clock::now();
-	solver->print_stats(duration_cast<microseconds> (t2 - t1).count());
+	solver->print_stats(duration_cast<microseconds>(t2 - t1).count() / 1000000.0);
 }
 
 void readFile(string& name, string& solverName) {

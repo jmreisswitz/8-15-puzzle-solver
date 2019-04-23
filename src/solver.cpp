@@ -1,4 +1,5 @@
 #include<iostream>
+#include <ios>
 #include "solver.h"
 
 using namespace std;
@@ -13,7 +14,7 @@ Solver::Solver()
 	final_cost = NO_SOLUTION;
 };
 
-void Solver::print_stats(unsigned long int execution_time)
+void Solver::print_stats(double execution_time)
 {
 	cout << expanded_nodes << ", ";
 
@@ -22,7 +23,7 @@ void Solver::print_stats(unsigned long int execution_time)
 	else
 		cout << final_cost << ", ";
 
-    cout << execution_time / 1000.0 << ", "
+    cout << std::fixed << execution_time << ", "
          << 1.0 * heuristic_avg / heuristic_count << ", "
          << (int) init_state_heuristic << endl;
 }

@@ -11,7 +11,7 @@ class Solver
 		virtual bool run(State initial_state) = 0;
 		void set_goal(State goal) {this->goal = goal;}
 		void set_num_of_cols(uint num_of_cols) {this->num_of_columns = num_of_cols;}
-		void print_stats(unsigned long int execution_time);
+		void print_stats(double execution_time);
 
 	protected:
 		unsigned long int expanded_nodes;

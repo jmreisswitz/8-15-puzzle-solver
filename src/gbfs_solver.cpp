@@ -1,14 +1,15 @@
 #include <iostream>
 #include <queue>
 #include <climits>
-#include <set>
+#include <unordered_set>
 #include "gbfs_solver.h"
+#define set std::unordered_set
 
 typedef std::pair<uint8_t, Node> GBFSNode;
 
 struct Comp {
     inline bool operator()(const GBFSNode &a, const GBFSNode &b) const {
-    	a.first > b.first;
+    	return a.first > b.first;
     }
 };
 
@@ -23,18 +24,19 @@ bool GbfsSolver::run(State initial_state) {
 	pqueue open;
 	open.push(GBFSNode(init_state_heuristic, Node(initial_state, 0)));
 	// Closed set
-	std::set<State> closed;
-	closed.insert(initial_state);
+	set<State> closed;
 	while(!open.empty()) {
 		uint8_t h = open.top().first;
 		Node current = open.top().second;
 		open.pop();
-		closed.insert(current.get_state());
 		// Check if it's goal
 		if(h == 0) {
 			final_cost = current.get_cost();
 			return true;
 		}
+		if (closed.count(current.get_state()) > 0)
+			continue;
+		closed.insert(current.get_state());
 		// Expand neighbors
 		expanded_nodes++;
 		for (int i = FIRST; i <= LAST; i++) { // For each direction

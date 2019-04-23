@@ -14,10 +14,10 @@ inline State swap_positions(State state, int blank_position, int tile_position)
 	return new_state.to_ulong();
 };
 
-inline int get_blank_position(State& state, int num_of_columns)
+inline int get_blank_position(State& state, uint size)
 {
 	State aux = 15; // 1111
-    for(int i = 0; i < num_of_columns*num_of_columns; i++)
+    for(uint i = 0; i < size; i++)
 	{
 		if((aux&state) == 0){
 			return i;
@@ -50,26 +50,31 @@ void state_to_vec(State state, int* vec, int vec_size)
 
 State Node::move_blank(int direction, int num_of_columns)
 {
-	int board_size = num_of_columns == 4 ? 16 : 9;
-    int blank_position = get_blank_position(state, num_of_columns);
+	int board_size = num_of_columns*num_of_columns;
+    int blank_position = get_blank_position(state, board_size);
     int end_position;
+
 	if (direction == UP){
-		if(blank_position - num_of_columns < 0)
+		if(blank_position < num_of_columns)
 			return 0;
-        end_position = blank_position-num_of_columns;
+        end_position = blank_position - num_of_columns;
+
 	} else if(direction == DOWN){
-		if (blank_position+num_of_columns > board_size)
+		if (blank_position + num_of_columns >= board_size)
 			return 0;
-		end_position = blank_position+num_of_columns;
+		end_position = blank_position + num_of_columns;
+
 	} else if(direction == LEFT){
-		if(blank_position%num_of_columns == 0)
+		if(blank_position % num_of_columns == 0)
 			return 0;
-		end_position = blank_position-1;
+		end_position = blank_position - 1;
+
 	} else if(direction == RIGHT){
-		if(blank_position%num_of_columns == num_of_columns - 1)
+		if(blank_position % num_of_columns == num_of_columns - 1)
 			return 0;
-		end_position = blank_position+1;
+		end_position = blank_position + 1;
 	}
+
 	return swap_positions(state, blank_position, end_position);
 };
 
