@@ -1,5 +1,4 @@
 rm csv/astar15.csv
-mkdir csv
 ulimit -v 8000000
 ulimit -t 30
 

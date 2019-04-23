@@ -1,5 +1,4 @@
 rm csv/*8.csv
-mkdir csv
 ulimit -v 4000000
 ulimit -t 600
 
