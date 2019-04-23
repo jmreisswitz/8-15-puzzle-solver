@@ -1,5 +1,5 @@
-#ifndef Node_H
-#define INSTACE_H
+#ifndef NODE_H
+#define NODE_H
 
 #define FIRST 0 // assim podemos iterar
 #define UP 0
@@ -51,4 +51,4 @@ class Node
 };
 
 
-#endif /* Node_H */
+#endif /* NODE_H */

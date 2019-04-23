@@ -4,6 +4,9 @@
 #include "node.h"
 #define NO_SOLUTION -1
 
+#include <climits>
+#define H_WEIGHT (INT_MAX / 90)
+
 class Solver
 {
 	public:

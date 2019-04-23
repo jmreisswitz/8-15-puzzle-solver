@@ -8,5 +8,5 @@ class IdAstarSolver: public Solver
 		IdAstarSolver();
 		bool run(State initial_state);
 	private:
-		pair<uint, uint> dfs(Node node, uint limit);
+		pair<uint, uint> dfs(Node node, State parent, uint limit);
 };

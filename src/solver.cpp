@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#define LINEAR_CONFLITC
+//#define LINEAR_CONFLITC
 
 Solver::Solver()
 {

@@ -10,6 +10,7 @@ bool BfsSolver::run(State initial_state)
 {	
 	// Stats
 	init_state_heuristic = heuristic(initial_state);
+	heuristic_avg = 0;
 	if (initial_state == goal) {
 		final_cost = 0;
 		return true;
