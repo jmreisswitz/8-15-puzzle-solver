@@ -36,17 +36,6 @@ inline uint8_t uabs(uint8_t x, uint8_t y) {
 	return x > y ? x - y : y - x;
 }
 
-inline uint get_col_diff(unsigned long number, unsigned long i, unsigned int num_of_cols)
-{
-	uint numbers_distance = uabs(i, number);
-	if(numbers_distance >= num_of_cols){
-		return numbers_distance/num_of_cols;
-	}
-	if(number%num_of_cols == 0){
-		return 1;
-	}
-}
-
 inline uint8_t get_manhattan_distance(uint num_of_cols, State state)
 {
 
@@ -66,26 +55,28 @@ inline uint8_t get_manhattan_distance(uint num_of_cols, State state)
 	uint8_t x = 0, y = 0;
 	for(uint8_t i = 0; i < board_size; i++)
 	{
+		// Get the number of the tile in the position (x, y) of the board.
 		number = state&aux;
 		number = number>>(i*4);
 		if(number > 0 && number!=i)
 		{
-			uint8_t suposed_x = number % num_of_cols;
-			uint8_t suposed_y = number / num_of_cols;
-			result += uabs(x, suposed_x) + uabs(y, suposed_y);
+			// Get the position where this tile should be.
+			uint8_t supposed_x = number % num_of_cols;
+			uint8_t supposed_y = number / num_of_cols;
+			result += uabs(x, supposed_x) + uabs(y, supposed_y);
 
 			#ifdef LINEAR_CONFLITC
 			// Horizontal conflicts
-			if (suposed_y == y) {
+			if (supposed_y == y) {
 				if (swap_row[y] > x)
 					row_conflicts++;
-				swap_row[y] = suposed_x;
+				swap_row[y] = supposed_x;
 			}
 			// Vertical conflicts
-			if (suposed_x == x) {
+			if (supposed_x == x) {
 				if (swap_col[x] > y)
 					col_conflicts++;
-				swap_col[x] = suposed_y;
+				swap_col[x] = supposed_y;
 			}
 			#endif
 

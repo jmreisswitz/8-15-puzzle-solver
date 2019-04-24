@@ -4,8 +4,6 @@
 #include "bfs_solver.h"
 #define set std::unordered_set
 
-BfsSolver::BfsSolver() : Solver() {};
-
 bool BfsSolver::run(State initial_state)
 {	
 	// Stats

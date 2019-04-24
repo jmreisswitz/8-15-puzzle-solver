@@ -5,7 +5,7 @@ using std::pair;
 class IdAstarSolver: public Solver
 {
 	public:
-		IdAstarSolver();
+		IdAstarSolver() : Solver() {}
 		bool run(State initial_state);
 	private:
 		pair<uint, uint> dfs(Node node, State parent, uint limit);

@@ -2,8 +2,7 @@
 #include <climits>
 #include "idastar_solver.h"
 
-IdAstarSolver::IdAstarSolver() : Solver() {};
-
+// Recursive DFS.
 pair<uint, uint> IdAstarSolver::dfs(Node current, State parent, uint f_limit) {
 	expanded_nodes++;
 	uint next_limit = UINT_MAX;

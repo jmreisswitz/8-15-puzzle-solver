@@ -1,8 +1,7 @@
 #include <iostream>
 #include "idfs_solver.h"
 
-IdfsSolver::IdfsSolver() : Solver() {};
-
+// Recursive DFS.
 uint IdfsSolver::dfs(uint depth, State state, State parent) {
 	if (depth == 0)
 		return NO_SOLUTION;

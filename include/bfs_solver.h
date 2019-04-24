@@ -3,6 +3,6 @@
 class BfsSolver: public Solver
 {
 	public:
-		BfsSolver();
+		BfsSolver() : Solver() {}
 		bool run(State initial_state);
 };

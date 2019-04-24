@@ -6,24 +6,26 @@
 
 uint gbfs_counter = 0;
 
+// A Node that includes a tie-breaker value.
+// The H_WEIGHT is (INT_MAX / 90), as 90 is the maximum manhatan distance.
+// It is assumed that gbfs_counter never reaches H_WEIGHT value (which is very big), 
+// so it is only used as a tie-breaker when h(s) is the same.
 struct GbfsNode : public Node {
 public:
 	uint tie_breaker;
 	GbfsNode(State state, uint g, uint8_t h) : Node(state, g) {
-		tie_breaker = h * H_WEIGHT + gbfs_counter;
+		tie_breaker = (h + 1) * H_WEIGHT - gbfs_counter;
 		gbfs_counter++;
 	}
 };
 
+// Comparator for the prioriy queue.
 struct Comp {
     inline bool operator()(const GbfsNode &a, const GbfsNode &b) const {
     	return a.tie_breaker > b.tie_breaker;
     }
 };
-
 typedef std::priority_queue<GbfsNode, std::vector<GbfsNode>, Comp> pqueue;
-
-GbfsSolver::GbfsSolver():Solver() {};
 
 bool GbfsSolver::run(State initial_state) {
 	// Stats
